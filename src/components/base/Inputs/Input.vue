@@ -28,6 +28,11 @@ const props = defineProps({
         type: String,
         default:  'text',
         required: false
+    },
+    prop: {
+        type: String,
+        default: '',
+        required: true
     }
 })
 
@@ -37,15 +42,17 @@ const value = ref('')
 <template>
     <main class="container-input">
         <span>{{ label }}</span>
-        <el-input
-            v-model="value"
-            @input="emit('update:modelValue', value)"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            :clearable="clearable"
-            :show-password="type === 'password'"
-            :type="type"
-        />
+        <el-form-item :prop="prop">
+            <el-input
+                v-model="value"
+                @input="emit('update:modelValue', value)"
+                :disabled="disabled"
+                :placeholder="placeholder"
+                :clearable="clearable"
+                :show-password="type === 'password'"
+                :type="type"
+            />
+        </el-form-item>
     </main>
 </template>
 

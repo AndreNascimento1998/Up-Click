@@ -22,7 +22,7 @@ const props = defineProps({
         type: String,
         default: 'button',
         required: false
-    }
+    },
 })
 </script>
 
