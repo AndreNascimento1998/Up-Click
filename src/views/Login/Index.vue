@@ -23,22 +23,22 @@ import FormLogin from "@/components/pages/Login/FormLogin.vue";
     </main>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 .container {
-    display: flex;
+    display: block;
 
     @media (min-width: $xl) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        padding: 4rem 10rem;
+        padding: 4rem 20rem;
     }
 
     &_body {
         display: flex;
         flex-direction: column;
         padding: 2rem;
-        gap: 4rem;
+        gap: 3rem;
 
         @media (min-width: $xl) {
             padding: 0;
