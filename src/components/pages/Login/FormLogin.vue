@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import {computed, ref} from 'vue'
 import { ElForm, FormRules } from 'element-plus'
 import Input from "@/components/base/Inputs/Input.vue";
 import Button from "@/components/base/Button/Button.vue";
+import useValidation from "@/composables/useValidation.ts";
 
 interface FormData {
     email: string;
@@ -11,23 +12,19 @@ interface FormData {
 
 const formData = ref<FormData>({
     email: '',
-    password: ''
+    password: '',
 })
 
-const rules = ref<FormRules>({
-    email: [
-        { required: true, message: 'O e-mail é obrigatório', trigger: 'blur' },
-        { type: 'email', message: 'Por favor insira um e-mail válido', trigger: ['blur', 'change'] }
-    ],
-    password: [
-        { required: true, message: 'A senha é obrigatória', trigger: 'blur' },
-        { min: 8, message: 'A senha deve ter no mínimo 8 caracteres', trigger: 'blur' }
-    ]
-})
+const { email, password } = useValidation
+
+const rules = computed(() => ({
+    email: email,
+    password: password
+}))
 
 const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 
-const onSubmit = () => {
+const sendLogin = () => {
     formRef.value?.validate((valid) => {
         if (valid) {
             console.log('Formulário enviado com sucesso', formData.value)
@@ -52,7 +49,7 @@ const onSubmit = () => {
             </article>
 
             <article style="width: 100%">
-                <Button text="Entrar" @click="onSubmit" />
+                <Button text="Entrar" @click="sendLogin" />
             </article>
         </main>
     </el-form>
