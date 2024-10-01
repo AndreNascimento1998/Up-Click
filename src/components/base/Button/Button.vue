@@ -15,7 +15,7 @@ const props = defineProps({
     },
     type: {
         type: String,
-        default: 'Button',
+        default: 'primary',
         required: false
     },
     nativeType: {
@@ -30,7 +30,7 @@ const props = defineProps({
     <main>
         <el-button
             @click="() => emits('click')"
-            type="primary"
+            :type="type"
             :native-type="nativeType"
             style="width: 100%"
             :disabled="disabled"
