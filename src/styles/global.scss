@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Fredoka:wght@300..700&display=swap');
+
+body {
+  font-family: 'Afacad Flux', sans-serif;
+  background-color: $bg-primary;
+  h1, h2, h3 {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 28px;
+    margin: 0;
+    color: $title-color;
+  }
+}
