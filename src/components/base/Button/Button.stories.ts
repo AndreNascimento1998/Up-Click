@@ -1,6 +1,12 @@
 import Button from "./Button.vue";
 import {Meta, Story} from "@storybook/vue3";
 
+interface ButtonArgs {
+    text: string,
+    disabled: boolean,
+    type: string,
+    nativeType: string
+}
 
 export default {
     title: 'Components/Button',
@@ -19,7 +25,7 @@ export default {
     }
 } as Meta
 
-const Template: Story = (args) => ({
+const Template: Story = (args: ButtonArgs) => ({
     components: { Button },
     setup() {
         return { args}

@@ -1,23 +1,19 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 
-import {computed} from "vue";
+interface OptionInterface {
+    name: string;
+    action: () => void;
+}
 
-const props = defineProps({
-    options: {
-        type: Array,
-        default: () => [],
-        required: true
-    },
-    userName: {
-        type: String,
-        default: '',
-        required: true
-    }
-})
+const props = defineProps<{
+    options: OptionInterface[];
+    userName: string;
+}>();
 
 const nameParsed = computed(() => {
-    return props.userName.split('')[0].toUpperCase()
-})
+    return props.userName.split('')[0].toUpperCase();
+});
 </script>
 
 <template>
@@ -29,9 +25,9 @@ const nameParsed = computed(() => {
                 </span>
             </el-avatar>
             <template #dropdown>
-                <el-dropdown-menu >
+                <el-dropdown-menu>
                     <el-dropdown-item
-                        v-for="(option, index) in options"
+                        v-for="(option, index) in props.options"
                         :key="index"
                         @click="option.action"
                     >

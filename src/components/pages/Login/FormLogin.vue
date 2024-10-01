@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import { ElForm, FormRules } from 'element-plus'
+import { ElForm } from 'element-plus'
 import Input from "@/components/base/Inputs/Input.vue";
 import Button from "@/components/base/Button/Button.vue";
 import useValidation from "@/composables/useValidation.ts";
@@ -32,7 +32,6 @@ const sendLogin = () => {
             console.log('Formulário enviado com sucesso', formData.value)
         } else {
             console.log('Erro ao validar o formulário')
-            return false
         }
     })
 }

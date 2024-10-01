@@ -1,6 +1,15 @@
 import { Meta, Story } from '@storybook/vue3'
 import Input from './Input.vue'
 
+interface StoryArgs {
+    label: string
+    placeholder: string
+    disabled: boolean
+    clearable: boolean
+    type: 'text' | 'password'
+    prop: string
+}
+
 export default {
     title: 'Components/Input',
     component: Input,
@@ -17,7 +26,7 @@ export default {
     },
 } as Meta
 
-const Template: Story = (args) => ({
+const Template: Story = (args: StoryArgs) => ({
     components: { Input },
     setup() {
         return { args }
