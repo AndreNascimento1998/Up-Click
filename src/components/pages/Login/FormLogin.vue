@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
-import { ElForm, FormRules } from 'element-plus'
+import { ElForm } from 'element-plus'
 import Input from "@/components/base/Inputs/Input.vue";
 import Button from "@/components/base/Button/Button.vue";
 import useValidation from "@/composables/useValidation.ts";
+import router from "@/router/Index.ts";
 
 interface FormData {
     email: string;
@@ -27,10 +28,10 @@ const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 const sendLogin = () => {
     formRef.value?.validate((valid) => {
         if (valid) {
+            router.push({ name: 'Home'} )
             console.log('Formulário enviado com sucesso', formData.value)
         } else {
             console.log('Erro ao validar o formulário')
-            return false
         }
     })
 }
@@ -70,12 +71,18 @@ const sendLogin = () => {
         flex-direction: column;
         align-items: end;
         width: 100%;
+        margin-bottom: 2rem;
 
         &_text {
             color: $title-color;
             font-weight: bold;
+            font-size: 16px;
             font-style: italic;
             cursor: pointer;
+
+            &:hover {
+                color: $blue-alternative;
+            }
         }
     }
 }

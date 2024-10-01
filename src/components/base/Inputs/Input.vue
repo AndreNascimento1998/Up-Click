@@ -41,16 +41,16 @@ const value = ref('')
 
 <template>
     <main class="container-input">
-        <span>{{ label }}</span>
-        <el-form-item :prop="prop">
+        <span>{{ props.label }}</span>
+        <el-form-item :prop="props.prop">
             <el-input
                 v-model="value"
                 @input="emit('update:modelValue', value)"
-                :disabled="disabled"
-                :placeholder="placeholder"
-                :clearable="clearable"
-                :show-password="type === 'password'"
-                :type="type"
+                :disabled="props.disabled"
+                :placeholder="props.placeholder"
+                :clearable="props.clearable"
+                :show-password="props.type === 'password'"
+                :type="props.type"
             />
         </el-form-item>
     </main>

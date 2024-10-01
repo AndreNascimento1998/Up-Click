@@ -30,12 +30,12 @@ const props = defineProps({
     <main>
         <el-button
             @click="() => emits('click')"
-            :type="type"
-            :native-type="nativeType"
+            :type="props.type"
+            :native-type="props.nativeType"
             style="width: 100%"
-            :disabled="disabled"
+            :disabled="props.disabled"
         >
-            {{ text }}
+            {{ props.text }}
         </el-button>
     </main>
 </template>
