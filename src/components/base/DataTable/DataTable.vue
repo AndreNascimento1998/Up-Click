@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import dayjs from 'dayjs'
+import ITaskList from "@/types/ITaskList.ts"
+import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
+import Button from "@/components/base/Button/Button.vue"
+import Dropdown from "@/components/base/Dropdown/Dropdown.vue";
 
-const now = new Date()
-
-const emit = defineEmits(['click-row'])
+const emit = defineEmits(['click-row', 'click-button-add'])
 
 const props = defineProps<{
     headers: {
         prop: string
         title: string
-        fixed: boolean
         width: number
     }[]
     tableData: {
@@ -19,75 +19,61 @@ const props = defineProps<{
         status: string
         dateStart: string
         dateEnd: string
-        priority: boolean
+        priority?: boolean
+    }[]
+    priority?: boolean
+    operation?: boolean
+    buttonText?: string
+    optionsDropdown?: {
+        name: string
+        action: (item: ITaskList) => void
     }[]
 }>()
 
-const deleteRow = (index: number) => {
-    tableData.value.splice(index, 1)
-}
-
-const onAddItem = () => {
-    now.setDate(now.getDate() + 1)
-    tableData.value.push({
-        date: dayjs(now).format('YYYY-MM-DD'),
-        name: 'Tom',
-        state: 'California',
-        city: 'Los Angeles',
-        address: 'No. 189, Grove St, Los Angeles',
-        zip: 'CA 90036',
-    })
-}
-
-const handleClickRow = (item) => {
+const handleClickRow = (item: ITaskList) => {
     emit('click-row', item)
 }
+
+const handleAdd = () => {
+    emit('click-button-add')
+}
+
 </script>
 
 <template>
-    <el-table @row-click="handleClickRow" :data="props.tableData" style="width: 100%; font-size: 18px">
+    <el-table @row-click="handleClickRow" :data="props.tableData" style="width: 100%; font-size: 18px; cursor: pointer">
         <el-table-column
             v-for="header in props.headers"
             :key="header.prop"
-            :fixed="header.fixed"
             :prop="header.prop"
             :label="header.title"
             :width="header.width"
         />
-        <el-table-column  label="Prioridade" min-width="120">
+        <el-table-column v-if="props.priority" label="Prioridade" min-width="300">
             <template #default="scope">
-                <el-button
-                    link
-                    type="primary"
-                    size="small"
-                    @click.prevent="deleteRow(scope.$index)"
-                    style="font-size: 16px"
-                >
-                    Remover
-                </el-button>
+                <FlagPriorityIcon :color="props.tableData[scope.$index].priority ? '#E60000FF': '#000'" />
             </template>
         </el-table-column>
-        <el-table-column  label="Operação" min-width="120">
+        <el-table-column v-if="props.operation" fixed="right" label="Operação" width="140" >
             <template #default="scope">
-                <el-button
-                    link
-                    type="primary"
-                    size="small"
-                    @click.prevent="deleteRow(scope.$index)"
-                    style="font-size: 16px"
-                >
-                    Remover
-                </el-button>
+                <div style="width: 100px">
+                    <Dropdown
+                        text="Opções"
+                        :item="props.tableData[scope.$index]"
+                        :options="props.optionsDropdown"
+                    />
+                </div>
             </template>
         </el-table-column>
     </el-table>
-    <el-button class="mt-4" style="width: 100%" @click="onAddItem">
-        Adicionar Item
-    </el-button>
+    <Button
+        v-if="props.buttonText"
+        type="primary"
+        :text="props.buttonText"
+        @click="handleAdd"
+        outlined
+        style="font-size: 16px"
+    />
 </template>
 
-<style lang="scss" scoped>
-.el-scrollbar__wrap--hidden-default  {
-    cursor: pointer !important;
-}
-</style>
+<style lang="scss" scoped></style>
