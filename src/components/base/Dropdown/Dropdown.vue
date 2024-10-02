@@ -1,35 +1,41 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import ITaskList from "@/types/ITaskList.ts";
 
 interface OptionInterface {
     name: string;
-    action: () => void;
+    action: (item: ITaskList | undefined | null | string | number) => void;
 }
 
 const props = defineProps<{
     options: OptionInterface[];
-    userName: string;
+    text: string;
+    rounded?: boolean
+    item?: ITaskList
 }>();
 
-const nameParsed = computed(() => {
-    return props.userName.split('')[0].toUpperCase();
+const textParsed = computed(() => {
+    return props.text.split('')[0].toUpperCase();
 });
 </script>
 
 <template>
     <main class="container-dropdown">
         <el-dropdown placement="top-start">
-            <el-avatar class="container-dropdown_avatar">
+            <el-avatar v-if="props.rounded" class="container-dropdown_avatar">
                 <span class="container-dropdown_avatar_text">
-                    {{ nameParsed }}
+                    {{ textParsed }}
                 </span>
             </el-avatar>
+            <el-button v-else type="primary">
+                {{ text }}
+            </el-button>
             <template #dropdown>
                 <el-dropdown-menu>
                     <el-dropdown-item
                         v-for="(option, index) in props.options"
                         :key="index"
-                        @click="option.action"
+                        @click="option.action(props.item)"
                     >
                         {{ option.name }}
                     </el-dropdown-item>

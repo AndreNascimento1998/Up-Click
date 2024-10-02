@@ -21,7 +21,9 @@ export default {
         nativeType: {
             control: { type: 'select' },
             options: ['button', 'submit', 'reset']
-        }
+        },
+        outlined: { control: 'boolean'},
+        comfortable: { control: 'boolean'}
     }
 } as Meta
 
@@ -43,4 +45,14 @@ Default.args = {
     disabled: false,
     type: 'primary',
     nativeType: 'button'
+}
+
+export const Outlined = Template.bind({})
+Outlined.args = {
+    text: 'Button Outlined',
+    disabled: false,
+    type: 'warning',
+    nativeType: 'button',
+    outlined: true,
+    comfortable: true
 }

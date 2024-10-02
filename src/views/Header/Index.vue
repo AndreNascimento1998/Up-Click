@@ -23,7 +23,7 @@ const logout = () => {
     <main class="container-header">
         <Logo />
         <article class="container-header_">
-            <Dropdown user-name="juka" :options="optionsDropdown" />
+            <Dropdown text="juka" rounded :options="optionsDropdown" />
         </article>
     </main>
 </template>
