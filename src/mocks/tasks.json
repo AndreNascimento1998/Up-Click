@@ -6,7 +6,7 @@
         "status": "pending",
         "dateStart": "2021-08-01",
         "dateEnd": "2021-10-12",
-        "priortyi": false
+        "priority": false
     },
     {
         "id": "2",

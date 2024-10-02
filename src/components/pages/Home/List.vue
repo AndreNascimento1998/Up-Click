@@ -2,51 +2,54 @@
 
 import CardText from "@/components/base/Card/CardText.vue";
 import DataTable from "@/components/base/DataTable/DataTable.vue";
-
-interface ITaskLists {
-    id: number
-    title: string
-    description: string
-    status: string
-    created_at: string
-}
+import ITaskList from "@/types/ITaskList.ts";
 
 const headers = [
     {
         prop: 'title',
         title: 'Nome',
-        fixed: true,
-        width: 500
+        width: 300,
     },
     {
         prop: 'dateStart',
         title: 'Data de Início',
-        fixed: true,
-        width: 0
+        width: 200
     },
     {
         prop: 'dateEnd',
         title: 'Data Final',
-        fixed: true,
-        width: 0
+        width: 200
     },
 ]
 
+const optionsDropdown = [
+    {
+        name: 'The Action 1st',
+        action: () => console.log('The Action 1st')
+    },
+    {
+        name: 'Sair',
+        action: (item: ITaskList) => handleRemove(item)
+    }
+]
+
 const props = defineProps<{
-    list: ITaskLists[]
+    list: ITaskList[]
     text: string
     color?: string
 }>()
 
-const enumStatus = {
-    pending: 'Pendente',
-    completed: 'Concluído'
-}
-
-const handleItemClicked = (item) => {
+const handleItemClicked = (item: ITaskList) => {
     console.log(item)
 }
 
+const handleAdd = () => {
+    console.log('Adicionar Tarefa')
+}
+
+const handleRemove = (item: ITaskList) => {
+    console.log('Remover Tarefa', item)
+}
 </script>
 
 <template>
@@ -54,16 +57,21 @@ const handleItemClicked = (item) => {
         <section>
             <article>
                 <CardText
-                    :text="text"
-                    :color="color"
+                    :text="props.text"
+                    :color="props.color"
                 />
             </article>
         </section>
         <section>
             <DataTable
                 @click-row="handleItemClicked"
+                @click-button-add="handleAdd"
+                :options-dropdown="optionsDropdown"
                 :headers="headers"
-                :table-data="list"
+                :table-data="props.list"
+                priority
+                operation
+                button-text="Adicionar Tarefa"
             />
         </section>
     </main>
