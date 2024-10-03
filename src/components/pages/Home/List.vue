@@ -3,6 +3,9 @@
 import CardText from "@/components/base/Card/CardText.vue";
 import DataTable from "@/components/base/DataTable/DataTable.vue";
 import ITaskList from "@/types/ITaskList.ts";
+import Modal from "@/components/base/Modal/Modal.vue";
+import {ref} from "vue";
+import ModalHome from "@/components/pages/Home/ModalHome.vue";
 
 const headers = [
     {
@@ -33,6 +36,12 @@ const optionsDropdown = [
     }
 ]
 
+const openModal = ref(false)
+
+const itemModal = ref({} as ITaskList)
+
+const titleDynamic = ref('')
+
 const props = defineProps<{
     list: ITaskList[]
     text: string
@@ -40,11 +49,16 @@ const props = defineProps<{
 }>()
 
 const handleItemClicked = (item: ITaskList) => {
+    openModal.value = true
+    titleDynamic.value  = 'Editando Tarefa'
+    itemModal.value = item
     console.log(item)
 }
 
 const handleAdd = () => {
-    console.log('Adicionar Tarefa')
+    openModal.value = true
+    titleDynamic.value  = 'Adicionar Tarefa'
+    itemModal.value = {} as ITaskList
 }
 
 const handleRemove = (item: ITaskList) => {
@@ -74,6 +88,11 @@ const handleRemove = (item: ITaskList) => {
                 button-text="Adicionar Tarefa"
             />
         </section>
+        <ModalHome
+            v-model="openModal"
+            :title-header="titleDynamic"
+            :item="itemModal"
+        />
     </main>
 </template>
 
