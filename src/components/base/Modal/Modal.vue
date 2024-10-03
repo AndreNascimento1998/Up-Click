@@ -11,7 +11,15 @@ const handleClick = () => {
 </script>
 
 <template>
-    <el-dialog v-model="showModal" @update:modelValue="handleClick" title="Outer Dialog" >
+    <el-dialog
+        v-model="showModal"
+        @update:modelValue="handleClick"
+        class="width"
+        title="Outer Dialog"
+        width="70%"
+    >
         <slot />
     </el-dialog>
 </template>
+
+<style lang="scss" scoped></style>
