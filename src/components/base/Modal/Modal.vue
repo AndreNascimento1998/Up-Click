@@ -16,7 +16,7 @@ const handleClick = () => {
         @update:modelValue="handleClick"
         class="width"
         title="Outer Dialog"
-        width="70%"
+        width="80%"
     >
         <slot />
     </el-dialog>

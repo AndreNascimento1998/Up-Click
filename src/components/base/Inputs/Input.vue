@@ -61,9 +61,9 @@ const handleInput = (value: string) => {
 <template>
     <main class="container-input">
         <span style="font-size: 18px">{{ props.label }}</span>
-        <el-form-item :prop="props.prop">
+        <el-form-item style="margin: 0" :prop="props.prop">
             <el-input
-                style="font-size: 14px"
+                style="font-size: 14px;"
                 v-model="internalValue"
                 @input="handleInput(internalValue)"
                 :disabled="props.disabled"

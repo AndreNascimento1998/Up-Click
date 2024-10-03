@@ -46,7 +46,7 @@ const open = ref(false)
 .container-cart-text {
     position: relative;
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     align-items: center;
     background-color: $bg-card-secondary;
     width: fit-content;
@@ -129,6 +129,7 @@ const open = ref(false)
     to {
         opacity: 0;
         transform: scale(0.95);
+        display: none;
     }
 }
 </style>
