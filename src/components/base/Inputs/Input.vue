@@ -34,6 +34,16 @@ const props = defineProps({
     modelValue: {
         type: String,
         default: ''
+    },
+    minRows: {
+        type: Number,
+        default: 4,
+        required: false
+    },
+    maxRows: {
+        type: Number,
+        default: 6,
+        required: false
     }
 })
 
@@ -53,6 +63,7 @@ const handleInput = (value: string) => {
         <span style="font-size: 18px">{{ props.label }}</span>
         <el-form-item :prop="props.prop">
             <el-input
+                style="font-size: 14px"
                 v-model="internalValue"
                 @input="handleInput(internalValue)"
                 :disabled="props.disabled"
@@ -60,6 +71,7 @@ const handleInput = (value: string) => {
                 :clearable="props.clearable"
                 :show-password="props.type === 'password'"
                 :type="props.type"
+                :autosize="{ minRows: minRows, maxRows: maxRows }"
             />
         </el-form-item>
     </main>
@@ -67,6 +79,13 @@ const handleInput = (value: string) => {
 
 <style lang="scss" scoped>
 .container-input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     width: 100%;
+}
+
+.el-textarea {
+    font-size: 18px !important;
 }
 </style>
