@@ -5,7 +5,7 @@
         "description": "Buscar leite no mercado",
         "status": "pending",
         "dateStart": "2021-08-01",
-        "dateEnd": "2021-10-12",
+        "dateEnd": "2022-11-31",
         "priority": false
     },
     {
@@ -13,8 +13,8 @@
         "title": "Tarefa do outro dia",
         "description": "Buscar pão na padaria",
         "status": "pending",
-        "dateStart": "2021-08-01",
-        "dateEnd": "2021-10-12",
+        "dateStart": "2023-01-02",
+        "dateEnd": "2023-10-12",
         "priority": false
     },
     {
@@ -23,7 +23,7 @@
         "description": "Buscar carne no açougue",
         "status": "pending",
         "dateStart": "2021-08-01",
-        "dateEnd": "2021-10-12",
+        "dateEnd": "2021-11-18",
         "priority": true
     },
     {
@@ -31,8 +31,8 @@
         "title": "Tarefa demorada",
         "description": "Buscar frutas na feira",
         "status": "completed",
-        "dateStart": "2021-08-01",
-        "dateEnd": "2021-10-12",
+        "dateStart": "2021-02-10",
+        "dateEnd": "2021-09-07",
         "priority": false
     },
     {
@@ -40,8 +40,8 @@
         "title": "Tarefa enrolada",
         "description": "Buscar verduras no mercado",
         "status": "pending",
-        "dateStart": "2021-08-01",
-        "dateEnd": "2021-10-12",
+        "dateStart": "2020-01-01",
+        "dateEnd": "2021-12-31",
         "priority": true
     }
 ]
