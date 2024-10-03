@@ -1,20 +1,34 @@
 <script setup lang="ts">
 import Modal from "@/components/base/Modal/Modal.vue"
-import {reactive, ref, watch} from "vue"
+import {computed, reactive, ref, watch} from "vue"
 import ITaskList from "@/types/ITaskList.ts";
 import Input from "@/components/base/Inputs/Input.vue";
 import CardText from "@/components/base/Card/CardText.vue";
 import DatePicker from "@/components/base/Inputs/DatePicker.vue";
 import Button from "@/components/base/Button/Button.vue";
+import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue";
+import {ElForm} from "element-plus";
+import useValidation from "@/composables/useValidation.ts";
 
 const openModal = ref(false)
 
 const form = reactive({
     title: '',
     status: '',
-    date: [],
-    description: ''
+    dateStart: '',
+    dateEnd: '',
+    description: '',
+    priority: false
 })
+
+const { minLength, required } = useValidation
+
+const rules = computed(() => ({
+    title: minLength,
+    description: required
+}))
+
+const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -26,8 +40,10 @@ const props = defineProps<{
 watch(() => props.item, (newValue: ITaskList) => {
     form.title = newValue.title
     form.status = newValue.status
-    form.date = [newValue.dateStart, newValue.dateEnd]
+    form.dateStart = newValue.dateStart
+    form.dateEnd =  newValue.dateEnd
     form.description = newValue.description
+    form.priority = newValue.priority
 })
 
 const handleClick = () => {
@@ -35,7 +51,13 @@ const handleClick = () => {
 }
 
 const saveTask = () => {
-    console.log(form)
+    formRef.value?.validate((valid) => {
+        if (valid) {
+            console.log('Formulário enviado com sucesso', form)
+        } else {
+            console.log('Erro ao validar o formulário')
+        }
+    })
 }
 
 </script>
@@ -47,31 +69,36 @@ const saveTask = () => {
         @update:modelValue="handleClick"
         :title="props.titleHeader"
     >
-        <main class="container-modal-home">
-            <CardText
-                :text="form.status === 'completed' ? 'Tarefa concluída' : 'Tarefa pendente'"
-                :color="form.status === 'completed' ? 'green' : 'yellow'"
-                dropdown
+        <el-form :model="form" :rules="rules" ref="formRef">
+            <main class="container-modal-home">
+                <CardText
+                    :text="form.status === 'completed' ? 'Tarefa concluída' : 'Tarefa pendente'"
+                    :color="form.status === 'completed' ? 'green' : 'yellow'"
+                    dropdown
 
-            >
-                <article class="container-modal-home_options-modal">
-                    <span
-                        @click="form.status = 'completed'"
-                        class="container-modal-home_options-modal_item"
-                    >
-                        <div class="container-modal-home_options-modal_item_circle-green"></div> <div>Tarefa concluída</div>
-                    </span>
-                    <span
-                        @click="form.status = 'pending'"
-                        class="container-modal-home_options-modal_item"
-                    >
-                        <div class="container-modal-home_options-modal_item_circle-yellow"></div> <div>Tarefa pedente</div>
-                    </span>
-                </article>
-            </CardText>
-            <h1 v-if="form.title">{{ form.title }}</h1>
-            <h1 v-else>Título exemplo</h1>
-            <section class="container-modal-home_input-section">
+                >
+                    <article class="container-modal-home_options-modal">
+                        <span
+                            @click="form.status = 'completed'"
+                            class="container-modal-home_options-modal_item"
+                        >
+                            <div class="container-modal-home_options-modal_item_circle-green"></div> <div>Tarefa concluída</div>
+                        </span>
+                        <span
+                            @click="form.status = 'pending'"
+                            class="container-modal-home_options-modal_item"
+                        >
+                            <div class="container-modal-home_options-modal_item_circle-yellow"></div> <div>Tarefa pedente</div>
+                        </span>
+                    </article>
+                </CardText>
+                <h1 v-if="form.title">{{ form.title }}</h1>
+                <h1 v-else>Título exemplo</h1>
+                <section class="container-modal-home_priority">
+                    <span>Prioridade: </span>
+                    <FlagPriorityIcon style="cursor: pointer" @click="form.priority = !form.priority" :color="form.priority ? '#E60000FF': '#000'" />
+                </section>
+                <section class="container-modal-home_input-section">
                     <Input
                         v-model="form.title"
                         placeholder="Digite o título"
@@ -79,27 +106,34 @@ const saveTask = () => {
                         prop="title"
                         label="Digite o título"
                     />
-                <section>
-                    <DatePicker
-                        v-model="form.date"
-                        label="Escolha da inicial e final"
+                    <section>
+                        <DatePicker
+                            v-model="form.dateStart"
+                            label="Escolha a data inicial"
+                        />
+                    </section>
+                    <section>
+                        <DatePicker
+                            v-model="form.dateEnd"
+                            label="Escolha a data final"
+                        />
+                    </section>
+                </section>
+                <Input
+                    v-model="form.description"
+                    prop="description"
+                    label="Descrição"
+                    type="textarea"
+                />
+                <section style="display: flex; text-align: center; align-self: center">
+                    <Button
+                        @click="saveTask"
+                        style="width: 200px"
+                        text="Salvar"
                     />
                 </section>
-            </section>
-            <Input
-                v-model="form.description"
-                prop="description"
-                label="Descrição"
-                type="textarea"
-            />
-            <section style="display: flex; text-align: center; align-self: center">
-                <Button
-                    style="width: 200px"
-                    text="Salvar"
-                    @click="handleClick"
-                />
-            </section>
-        </main>
+            </main>
+        </el-form>
     </Modal>
 </template>
 
@@ -158,13 +192,23 @@ const saveTask = () => {
     }
 
     &_input-section {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
 
         @media (min-width: $md) {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 1rem;
         }
+    }
+
+    &_priority {
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        font-size: 18px;
+        font-weight: bold;
     }
 }
 </style>
