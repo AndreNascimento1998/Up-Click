@@ -51,7 +51,6 @@ const handleItemClicked = (item: ITaskList) => {
     openModal.value = true
     titleDynamic.value  = 'Editando Tarefa'
     itemModal.value = item
-    console.log(item)
 }
 
 const handleAdd = () => {

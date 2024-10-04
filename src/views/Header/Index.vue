@@ -4,10 +4,6 @@ import Dropdown from "@/components/base/Dropdown/Dropdown.vue";
 
 const optionsDropdown = [
     {
-        name: 'The Action 1st',
-        action: () => console.log('The Action 1st')
-    },
-    {
         name: 'Sair',
         action: () => logout()
     }

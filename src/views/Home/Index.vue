@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import Header from "@/views/Header/Index.vue";
-import Button from "@/components/base/Button/Button.vue";
 import ListIcon from "@/assets/icons/Home/ListIcon.vue";
 import tasks from '@/mocks/tasks.json'
 import List from "@/components/pages/Home/List.vue";
