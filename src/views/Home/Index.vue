@@ -35,7 +35,6 @@ const completedTasks = computed( () => {
                     <ListIcon style="align-self: center"/>
                     <span>Lista</span>
                 </div>
-                <div><Button text="Adicionar Tarefa +" outlined comfortable /></div>
             </article>
             <section class="container-home_section-home_list">
                 <List

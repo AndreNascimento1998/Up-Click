@@ -3,6 +3,7 @@ import ITaskList from "@/types/ITaskList.ts"
 import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
 import Button from "@/components/base/Button/Button.vue"
 import Dropdown from "@/components/base/Dropdown/Dropdown.vue";
+import {onMounted, ref} from "vue";
 
 const emit = defineEmits(['click-row', 'click-button-add'])
 
@@ -30,8 +31,16 @@ const props = defineProps<{
     }[]
 }>()
 
+const tabletWidth = ref(false)
+
+onMounted(() => {
+    tabletWidth.value = window.innerWidth <= 1024
+})
+
 const handleClickRow = (item: ITaskList) => {
-    emit('click-row', item)
+    if (!tabletWidth.value) {
+        emit('click-row', item)
+    }
 }
 
 const handleAdd = () => {
