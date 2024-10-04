@@ -6,6 +6,7 @@ interface ITaskLists {
     dateStart: string
     dateEnd: string
     priority?: boolean
+    createdAt?: string
 }
 
 export default ITaskLists

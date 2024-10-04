@@ -1,25 +1,34 @@
 <script lang="ts" setup>
 import Header from "@/views/Header/Index.vue";
-import Button from "@/components/base/Button/Button.vue";
 import ListIcon from "@/assets/icons/Home/ListIcon.vue";
 import tasks from '@/mocks/tasks.json'
 import List from "@/components/pages/Home/List.vue";
 import {computed, ref} from "vue";
 import ITaskList from "@/types/ITaskList.ts";
+import dayjs from "dayjs";
 
+// TODO: move the logic to pis, when it comes from a request
 const taskList = ref<ITaskList[]>(tasks)
+
+const taskListFormat = computed( () =>
+    taskList.value.map(task => {
+    return {
+        ...task,
+        createdAt: task.createdAt ? dayjs(task.createdAt).format('YYYY-MM-DD') : null
+    }
+}))
 
 const pendingTasks = computed( () => {
 
-    if (taskList.value && taskList.value.length > 0){
-        return taskList.value.filter(task => task.status === 'pending')
+    if (taskListFormat.value && taskListFormat.value.length > 0){
+        return taskListFormat.value.filter(task => task.status === 'pending')
     }
     return []
 })
 
 const completedTasks = computed( () => {
-    if (taskList.value && taskList.value.length > 0) {
-        return taskList.value.filter(task => task.status === 'completed')
+    if (taskListFormat.value && taskListFormat.value.length > 0) {
+        return taskListFormat.value.filter(task => task.status === 'completed')
     }
     return []
 })
