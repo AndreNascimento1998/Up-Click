@@ -5,6 +5,7 @@ import DataTable from "@/components/base/DataTable/DataTable.vue";
 import ITaskList from "@/types/ITaskList.ts";
 import {ref} from "vue";
 import ModalHome from "@/components/pages/Home/ModalHome.vue";
+import Swal from "sweetalert2";
 
 const headers = [
     {
@@ -13,14 +14,19 @@ const headers = [
         width: 300,
     },
     {
+        prop: 'createdAt',
+        title: 'Data de criação',
+        width: 250
+    },
+    {
         prop: 'dateStart',
         title: 'Data de Início',
-        width: 300
+        width: 250
     },
     {
         prop: 'dateEnd',
         title: 'Data Final',
-        width: 300
+        width: 280
     },
 ]
 
@@ -60,6 +66,23 @@ const handleAdd = () => {
 }
 
 const handleRemove = (item: ITaskList) => {
+    Swal.fire({
+        title: `Você tem certeza? ${item.title} será deletado(a)!`,
+        text: "Você não poderá reverter isso!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, deletar!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire(
+                'Deletado!',
+                'Sua tarefa foi deletada.',
+                'success'
+            )
+        }
+    })
     console.log('Remover Tarefa', item)
 }
 </script>
@@ -76,7 +99,6 @@ const handleRemove = (item: ITaskList) => {
         </section>
         <section>
             <DataTable
-                @click-row="handleItemClicked"
                 @click-button-add="handleAdd"
                 :options-dropdown="optionsDropdown"
                 :headers="headers"
