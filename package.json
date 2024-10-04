@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "element-plus": "^2.8.4",
+    "firebase": "^10.14.0",
     "pinia": "^2.2.3",
     "sweetalert2": "^11.14.1",
     "vue": "^3.4.37",
