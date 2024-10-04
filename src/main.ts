@@ -5,6 +5,7 @@ import 'element-plus/dist/index.css'
 import router from "./router/Index.ts"
 import {createPinia} from "pinia"
 import ptBr from 'element-plus/es/locale/lang/pt-br'
+import './firebaseConfig'
 
 const app = createApp(App)
 
