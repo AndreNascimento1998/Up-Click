@@ -3,7 +3,6 @@
 import CardText from "@/components/base/Card/CardText.vue";
 import DataTable from "@/components/base/DataTable/DataTable.vue";
 import ITaskList from "@/types/ITaskList.ts";
-import Modal from "@/components/base/Modal/Modal.vue";
 import {ref} from "vue";
 import ModalHome from "@/components/pages/Home/ModalHome.vue";
 
@@ -16,22 +15,22 @@ const headers = [
     {
         prop: 'dateStart',
         title: 'Data de Início',
-        width: 200
+        width: 300
     },
     {
         prop: 'dateEnd',
         title: 'Data Final',
-        width: 200
+        width: 300
     },
 ]
 
 const optionsDropdown = [
     {
-        name: 'The Action 1st',
-        action: () => console.log('The Action 1st')
+        name: 'Editar',
+        action: (item: ITaskList) => handleItemClicked(item)
     },
     {
-        name: 'Sair',
+        name: 'Deletar',
         action: (item: ITaskList) => handleRemove(item)
     }
 ]
