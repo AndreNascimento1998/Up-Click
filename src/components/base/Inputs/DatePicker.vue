@@ -19,7 +19,7 @@ onMounted(() => {
     }
 })
 
-watch(() => props.modelValue, (newValue: string[]) => {
+watch(() => props.modelValue, (newValue: string | undefined) => {
     if (newValue) {
         value.value = newValue
     } else {
