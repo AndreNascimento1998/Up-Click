@@ -78,18 +78,18 @@ const saveTask = () => {
 
                 >
                     <article class="container-modal-home_options-modal">
-                        <span
+                        <div
                             @click="form.status = 'completed'"
                             class="container-modal-home_options-modal_item"
                         >
-                            <div class="container-modal-home_options-modal_item_circle-green"></div> <div>Tarefa concluída</div>
-                        </span>
-                        <span
+                            <span class="container-modal-home_options-modal_item_circle-green"></span> <span>Tarefa concluída</span>
+                        </div>
+                        <div
                             @click="form.status = 'pending'"
                             class="container-modal-home_options-modal_item"
                         >
-                            <div class="container-modal-home_options-modal_item_circle-yellow"></div> <div>Tarefa pedente</div>
-                        </span>
+                            <span class="container-modal-home_options-modal_item_circle-yellow"></span> <span>Tarefa pedente</span>
+                        </div>
                     </article>
                 </CardText>
                 <h1 v-if="form.title">{{ form.title }}</h1>
