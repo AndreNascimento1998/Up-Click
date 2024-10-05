@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-const emits = defineEmits(['click'])
+const emit = defineEmits(['click'])
 
 const props = defineProps({
     text: {
@@ -34,12 +34,17 @@ const props = defineProps({
         required: false
     }
 })
+
+const emitClick = () => {
+    emit('click')
+}
+
 </script>
 
 <template>
     <main>
         <el-button
-            @click="() => emits('click')"
+            @click="emitClick"
             :type="props.type"
             :class="{ comfortable: comfortable }"
             :native-type="props.nativeType"
