@@ -1,6 +1,6 @@
 import {defineStore} from "pinia"
 import {ref} from "vue"
-import {signInWithEmailAndPassword, signOut} from "firebase/auth"
+import {signInWithEmailAndPassword, signOut, sendPasswordResetEmail} from "firebase/auth"
 import { auth } from '@/firebaseConfig.ts'
 
 export const AuthStore = defineStore('auth', () => {
@@ -24,9 +24,19 @@ export const AuthStore = defineStore('auth', () => {
         }
     }
 
+    async function resetPassword(email: string) {
+        try {
+            await sendPasswordResetEmail(auth, email)
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+
     return {
         user,
         singAuth,
-        logout
+        logout,
+        resetPassword
     }
 })

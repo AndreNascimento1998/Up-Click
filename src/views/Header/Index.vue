@@ -21,6 +21,7 @@ const logout = async () => {
 </script>
 
 <template>
+    {{ useAuthStore.user }}
     <main class="container-header">
         <Logo />
         <article class="container-header_">

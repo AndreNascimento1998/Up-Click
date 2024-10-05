@@ -7,6 +7,7 @@ import {createPinia} from "pinia"
 import ptBr from 'element-plus/es/locale/lang/pt-br'
 import './firebaseConfig'
 
+
 const app = createApp(App)
 
 const pinia = createPinia()

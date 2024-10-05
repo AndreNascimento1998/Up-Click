@@ -18,7 +18,7 @@ const form = reactive({
     dateStart: '',
     dateEnd: '',
     description: '',
-    priority: false
+    priority: false as boolean | undefined
 })
 
 const { minLength, required } = useValidation
