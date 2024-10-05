@@ -66,6 +66,7 @@ const saveTask = async () => {
                 type: 'success'
             })
             openModal.value = false
+            await useTaskListStore.fetchTask()
         } else {
             console.log('Erro ao validar o formulário')
         }
