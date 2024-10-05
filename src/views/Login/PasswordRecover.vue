@@ -36,6 +36,12 @@ const recoverPassword = async () => {
                     message: 'E-mail enviado com sucesso',
                     type: 'success'
                 })
+            }).catch(() => {
+                ElNotification({
+                    title: 'Erro',
+                    message: 'Erro ao enviar e-mail',
+                    type: 'error'
+                })
             })
         } else {
             console.log('Erro ao validar o formulário')
