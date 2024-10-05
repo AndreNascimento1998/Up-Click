@@ -7,12 +7,15 @@ import CardText from "@/components/base/Card/CardText.vue"
 import DatePicker from "@/components/base/Inputs/DatePicker.vue"
 import Button from "@/components/base/Button/Button.vue"
 import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
-import {ElForm} from "element-plus"
+import {ElForm, ElNotification} from "element-plus"
 import useValidation from "@/composables/useValidation.ts"
+import {TaskListStore} from "@/stores/TaskListStore.ts"
 
 const openModal = ref(false)
 
-const form = reactive({
+const useTaskListStore = TaskListStore()
+
+const form = reactive<ITaskList>({
     title: '',
     status: 'pending' as string,
     dateStart: '',
@@ -49,24 +52,39 @@ watch(() => props.item, (newValue: ITaskList) => {
 })
 
 const handleClick = () => {
-    emit('update:modelValue', false)
+    emit('update:modelValue', openModal.value)
 }
 
-const saveTask = () => {
-    formRef.value?.validate((valid) => {
+const saveTask = async () => {
+    formRef.value?.validate( async (valid) => {
         if (valid) {
-            console.log('Formulário enviado com sucesso', form)
+            await useTaskListStore.addTask(form)
+            resetData()
+            ElNotification({
+                title: 'Sucesso',
+                message: 'Tarefa salva com sucesso',
+                type: 'success'
+            })
+            openModal.value = false
         } else {
             console.log('Erro ao validar o formulário')
         }
     })
 }
 
+const resetData = () => {
+    form.title = ''
+    form.status = 'pending'
+    form.dateStart = ''
+    form.dateEnd = ''
+    form.description = ''
+    form.priority = false
+}
+
 </script>
 
 <template>
     <Modal
-        v-if="!openModal"
         v-model="openModal"
         @update:modelValue="handleClick"
         :title="props.titleHeader"
