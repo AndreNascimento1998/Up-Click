@@ -1,24 +1,29 @@
 <script setup lang="ts">
 import Modal from "@/components/base/Modal/Modal.vue"
 import {computed, reactive, ref, watch} from "vue"
-import ITaskList from "@/types/ITaskList.ts";
-import Input from "@/components/base/Inputs/Input.vue";
-import CardText from "@/components/base/Card/CardText.vue";
-import DatePicker from "@/components/base/Inputs/DatePicker.vue";
-import Button from "@/components/base/Button/Button.vue";
-import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue";
-import {ElForm} from "element-plus";
-import useValidation from "@/composables/useValidation.ts";
+import ITaskList from "@/types/ITaskList.ts"
+import Input from "@/components/base/Inputs/Input.vue"
+import CardText from "@/components/base/Card/CardText.vue"
+import DatePicker from "@/components/base/Inputs/DatePicker.vue"
+import Button from "@/components/base/Button/Button.vue"
+import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
+import {ElForm, ElNotification} from "element-plus"
+import useValidation from "@/composables/useValidation.ts"
+import {TaskListStore} from "@/stores/TaskListStore.ts"
 
 const openModal = ref(false)
 
-const form = reactive({
+const useTaskListStore = TaskListStore()
+
+const form = reactive<ITaskList>({
+    id: '',
     title: '',
-    status: '',
+    status: 'pending' as string,
     dateStart: '',
     dateEnd: '',
     description: '',
-    priority: false as boolean | undefined
+    priority: false as boolean | undefined,
+    createdAt: ''
 })
 
 const { minLength, required } = useValidation
@@ -35,36 +40,74 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
     titleHeader: string
     item: ITaskList
+    isAddItem?: boolean
 }>()
 
 watch(() => props.item, (newValue: ITaskList) => {
-    form.title = newValue.title
-    form.status = newValue.status
-    form.dateStart = newValue.dateStart
-    form.dateEnd =  newValue.dateEnd
-    form.description = newValue.description
-    form.priority = newValue.priority
+    if (newValue) {
+        form.id = newValue.id
+        form.title = newValue.title
+        form.status = newValue.status
+        form.dateStart = newValue.dateStart
+        form.dateEnd =  newValue.dateEnd
+        form.description = newValue.description
+        form.priority = newValue.priority
+        form.createdAt = newValue.createdAt
+    }
 })
 
 const handleClick = () => {
-    emit('update:modelValue', false)
+    emit('update:modelValue', openModal.value)
 }
 
-const saveTask = () => {
-    formRef.value?.validate((valid) => {
+const saveTask = async () => {
+    formRef.value?.validate( async (valid) => {
         if (valid) {
-            console.log('Formulário enviado com sucesso', form)
+            await useTaskListStore.addTask(form)
+            resetData()
+            ElNotification({
+                title: 'Sucesso',
+                message: 'Tarefa salva com sucesso',
+                type: 'success'
+            })
+            openModal.value = false
+            await useTaskListStore.fetchTask()
         } else {
             console.log('Erro ao validar o formulário')
         }
     })
 }
 
+const editTask = async () => {
+    formRef.value?.validate( async (valid) => {
+        if (valid) {
+            await useTaskListStore.editTask(form)
+            ElNotification({
+                title: 'Sucesso',
+                message: 'Tarefa salva com sucesso',
+                type: 'success'
+            })
+            openModal.value = false
+            await useTaskListStore.fetchTask()
+        } else {
+            console.log('Erro ao validar o formulário')
+        }
+    })
+}
+
+const resetData = () => {
+    form.title = ''
+    form.status = 'pending'
+    form.dateStart = ''
+    form.dateEnd = ''
+    form.description = ''
+    form.priority = false
+}
+
 </script>
 
 <template>
     <Modal
-        v-if="!openModal"
         v-model="openModal"
         @update:modelValue="handleClick"
         :title="props.titleHeader"
@@ -78,18 +121,18 @@ const saveTask = () => {
 
                 >
                     <article class="container-modal-home_options-modal">
-                        <span
+                        <div
                             @click="form.status = 'completed'"
                             class="container-modal-home_options-modal_item"
                         >
-                            <div class="container-modal-home_options-modal_item_circle-green"></div> <div>Tarefa concluída</div>
-                        </span>
-                        <span
+                            <span class="container-modal-home_options-modal_item_circle-green"></span> <span>Tarefa concluída</span>
+                        </div>
+                        <div
                             @click="form.status = 'pending'"
                             class="container-modal-home_options-modal_item"
                         >
-                            <div class="container-modal-home_options-modal_item_circle-yellow"></div> <div>Tarefa pedente</div>
-                        </span>
+                            <span class="container-modal-home_options-modal_item_circle-yellow"></span> <span>Tarefa pedente</span>
+                        </div>
                     </article>
                 </CardText>
                 <h1 v-if="form.title">{{ form.title }}</h1>
@@ -127,9 +170,17 @@ const saveTask = () => {
                 />
                 <section style="display: flex; text-align: center; align-self: center">
                     <Button
+                        v-if="props.isAddItem"
                         @click="saveTask"
                         style="width: 200px"
                         text="Salvar"
+                    />
+                    <Button
+                        v-else
+                        @click="editTask"
+                        type="warning"
+                        style="width: 200px"
+                        text="Editar"
                     />
                 </section>
             </main>

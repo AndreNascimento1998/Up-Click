@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import Modal from "@/components/base/Modal/Modal.vue";
-import {computed, ref} from "vue";
-import {ElForm, ElNotification} from "element-plus";
-import useValidation from "@/composables/useValidation.ts";
-import Input from "@/components/base/Inputs/Input.vue";
-import Button from "@/components/base/Button/Button.vue";
-import {AuthStore} from "@/stores/AuthStore.ts";
+import Modal from "@/components/base/Modal/Modal.vue"
+import {computed, ref} from "vue"
+import {ElForm, ElNotification} from "element-plus"
+import useValidation from "@/composables/useValidation.ts"
+import Input from "@/components/base/Inputs/Input.vue"
+import Button from "@/components/base/Button/Button.vue"
+import {AuthStore} from "@/stores/AuthStore.ts"
 
 interface FormData {
-    email: string;
+    email: string
 }
 
 const useAuthStore = AuthStore()
@@ -30,7 +30,7 @@ const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 const emit = defineEmits(['update:modelValue'])
 
 const handleClick = () => {
-    emit('update:modelValue', false)
+    emit('update:modelValue', openModal.value)
 }
 
 const recoverPassword = async () => {

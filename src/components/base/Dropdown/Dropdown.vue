@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import ITaskList from "@/types/ITaskList.ts";
+import { computed } from 'vue'
+import ITaskList from "@/types/ITaskList.ts"
 
 interface OptionInterface {
-    name: string;
-    action: (item: ITaskList | undefined | null | string | number) => void;
+    name: string
+    action: (item: ITaskList | undefined | null | string | number) => void
 }
 
 const props = defineProps<{
-    options: OptionInterface[];
-    text: string;
+    options: OptionInterface[]
+    text: string
     rounded?: boolean
     item?: ITaskList
-}>();
+}>()
 
 const textParsed = computed(() => {
-    return props.text.split('')[0].toUpperCase();
-});
+    return props.text.split('')[0].toUpperCase()
+})
 </script>
 
 <template>

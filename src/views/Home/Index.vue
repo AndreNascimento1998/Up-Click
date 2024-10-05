@@ -1,22 +1,32 @@
 <script lang="ts" setup>
-import Header from "@/views/Header/Index.vue";
-import ListIcon from "@/assets/icons/Home/ListIcon.vue";
-import tasks from '@/mocks/tasks.json'
-import List from "@/components/pages/Home/List.vue";
-import {computed, ref} from "vue";
-import ITaskList from "@/types/ITaskList.ts";
-import dayjs from "dayjs";
+import Header from "@/views/Header/Index.vue"
+import ListIcon from "@/assets/icons/Home/ListIcon.vue"
+import List from "@/components/pages/Home/List.vue"
+import {computed, onMounted} from "vue"
+import ITaskList from "@/types/ITaskList.ts"
+import dayjs from "dayjs"
+import {TaskListStore} from "@/stores/TaskListStore.ts";
 
-// TODO: move the logic to pis, when it comes from a request
-const taskList = ref<ITaskList[]>(tasks)
+const useTaskListStore = TaskListStore()
+
+onMounted(async () => {
+    await useTaskListStore.fetchTask()
+})
+
+const taskList = computed<ITaskList[]>(() => {
+    if (useTaskListStore.taskList) {
+        return useTaskListStore.taskList
+    }
+    return []
+})
 
 const taskListFormat = computed( () =>
     taskList.value.map(task => {
-    return {
-        ...task,
-        createdAt: task.createdAt ? dayjs(task.createdAt).format('YYYY-MM-DD') : null
-    }
-}))
+        return {
+            ...task,
+            createdAt: task.createdAt ? dayjs(task.createdAt).format('YYYY-MM-DD') : null
+        }
+    }))
 
 const pendingTasks = computed( () => {
 

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 
-import {ref} from "vue";
-import ChevronDown from "@/assets/icons/Outhers/ChevronDown.vue";
-import ChevronUp from "@/assets/icons/Outhers/ChevronUp.vue";
+import {ref} from "vue"
+import ChevronDown from "@/assets/icons/Outhers/ChevronDown.vue"
+import ChevronUp from "@/assets/icons/Outhers/ChevronUp.vue"
 
 const props = defineProps<{
     text: string

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import {computed, ref} from 'vue'
 import {ElForm, ElNotification} from 'element-plus'
-import Input from "@/components/base/Inputs/Input.vue";
-import Button from "@/components/base/Button/Button.vue";
-import useValidation from "@/composables/useValidation.ts";
-import router from "@/router/Index.ts";
+import Input from "@/components/base/Inputs/Input.vue"
+import Button from "@/components/base/Button/Button.vue"
+import useValidation from "@/composables/useValidation.ts"
+import router from "@/router/Index.ts"
 import { AuthStore } from "@/stores/AuthStore"
-import ModalRecoverPassword from "@/components/pages/Login/ModalRecoverPassword.vue";
+import ModalRecoverPassword from "@/components/pages/Login/ModalRecoverPassword.vue"
 
 interface FormData {
-    email: string;
-    password: string;
+    email: string
+    password: string
 }
 
 const useAuthStore = AuthStore()

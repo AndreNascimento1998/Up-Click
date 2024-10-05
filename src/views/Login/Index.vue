@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LoginBanner from '@/assets/images/Login/login-banner.png'
 import Logo from '@/assets/icons/Logo/Index.vue'
-import FormLogin from "@/components/pages/Login/FormLogin.vue";
+import FormLogin from "@/components/pages/Login/FormLogin.vue"
 
 </script>
 

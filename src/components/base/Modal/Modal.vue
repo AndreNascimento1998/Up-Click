@@ -1,24 +1,34 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref, watch } from 'vue'
 
 const showModal = ref(false)
 
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps<{
-    title?: string
+    modelValue: boolean,
+    title?: string,
 }>()
 
+watch(() => props.modelValue, (newValue) => {
+    showModal.value = newValue
+})
 
 const handleClick = () => {
+    emit('update:modelValue', showModal.value)
+}
+
+const handleClickClose = () => {
     emit('update:modelValue', false)
 }
+
 </script>
 
 <template>
     <el-dialog
         v-model="showModal"
-        @update:modelValue="handleClick"
+        @open="handleClick"
+        @close="handleClickClose"
         class="width"
         :title="props.title"
         width="80%"
@@ -26,5 +36,3 @@ const handleClick = () => {
         <slot />
     </el-dialog>
 </template>
-
-<style lang="scss" scoped></style>
