@@ -9,6 +9,7 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
     label: string
     modelValue: string[] | undefined
+    disabled?: boolean
 }>()
 
 onMounted(() => {
@@ -37,6 +38,7 @@ watch(() => props.modelValue, (newValue: string[] | undefined) => {
             style="width: 100%"
             v-model="value"
             @change="emit('update:modelValue', value)"
+            :disabled="disabled"
             type="daterange"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"

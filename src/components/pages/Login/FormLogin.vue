@@ -6,6 +6,9 @@ import Button from "@/components/base/Button/Button.vue"
 import useValidation from "@/composables/useValidation.ts"
 import router from "@/router/Index.ts"
 import { AuthStore } from "@/stores/AuthStore"
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
+
+const useGlobalStore = GlobalStore()
 
 interface FormData {
     email: string
@@ -14,7 +17,7 @@ interface FormData {
 
 const useAuthStore = AuthStore()
 
-const loading = ref(false)
+const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 
 const formData = ref<FormData>({
     email: '',
@@ -28,10 +31,9 @@ const rules = computed(() => ({
     password: password
 }))
 
-const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+const loading = computed(() => useGlobalStore.loading)
 
 const sendLogin = () => {
-    loading.value = true
     formRef.value?.validate( (valid) => {
         if (valid) {
             useAuthStore.singAuth(formData.value.email, formData.value.password).then(() => {
@@ -52,7 +54,6 @@ const sendLogin = () => {
             })
         }
     })
-    loading.value = false
 }
 
 </script>

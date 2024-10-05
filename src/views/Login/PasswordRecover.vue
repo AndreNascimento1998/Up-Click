@@ -6,7 +6,10 @@ import Input from "@/components/base/Inputs/Input.vue"
 import Button from "@/components/base/Button/Button.vue"
 import {AuthStore} from "@/stores/AuthStore.ts"
 import LoginBanner from '@/assets/images/Login/password-recover-banner.png'
-import Logo from "@/assets/icons/Logo/Index.vue";
+import Logo from "@/assets/icons/Logo/Index.vue"
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
+
+const useGlobalStore = GlobalStore()
 
 interface FormData {
     email: string
@@ -20,12 +23,13 @@ const formData = ref<FormData>({
 
 const { email } = useValidation
 
+const formRef = ref<InstanceType<typeof ElForm> | null>(null)
+
 const rules = computed(() => ({
     email: email
 }))
 
-const formRef = ref<InstanceType<typeof ElForm> | null>(null)
-
+const loading = computed(() => useGlobalStore.loading)
 
 const recoverPassword = async () => {
     formRef.value?.validate((valid) => {
@@ -52,6 +56,7 @@ const recoverPassword = async () => {
 </script>
 
 <template>
+    {{useGlobalStore.loading}}
     <el-form :model="formData" :rules="rules" ref="formRef">
     <main class="container-recover-password">
         <section class="container-recover-password_section">
@@ -65,14 +70,17 @@ const recoverPassword = async () => {
                     v-model="formData.email"
                     prop="email"
                     label="E-mail"
+                    :disabled="loading"
                     placeholder="Digite seu e-mail para recuperar a senha"
                 />
                 <Button
                     @click="recoverPassword"
+                    :disabled="loading"
                     text="Enviar"
                 />
                 <Button
                     @click="$router.push({name: 'Login'})"
+                    :disabled="loading"
                     outlined
                     text="Voltar para o login"
                 />

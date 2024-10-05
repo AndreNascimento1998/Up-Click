@@ -10,6 +10,7 @@ import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
 import {ElForm, ElNotification} from "element-plus"
 import useValidation from "@/composables/useValidation.ts"
 import {TaskListStore} from "@/stores/TaskListStore.ts"
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
 
 interface IForm {
     id?: string
@@ -22,6 +23,8 @@ interface IForm {
 }
 
 const openModal = ref(false)
+
+const useGlobalStore = GlobalStore()
 
 const useTaskListStore = TaskListStore()
 
@@ -51,6 +54,8 @@ const props = defineProps<{
     item: ITaskList
     isAddItem?: boolean
 }>()
+
+const loading = computed(() => useGlobalStore.loading)
 
 watch(() => props.item, (newValue: ITaskList) => {
     if (newValue) {
@@ -160,7 +165,7 @@ const parsedForm = () => {
                 <h1 v-if="form.title">{{ form.title }}</h1>
                 <h1 v-else>Título exemplo</h1>
                 <section class="container-modal-home_priority">
-                    <span>Prioridade: </span>
+                    <span>Defina a prioridade: </span>
                     <FlagPriorityIcon style="cursor: pointer" @click="form.priority = !form.priority" :color="form.priority ? '#E60000FF': '#000'" />
                 </section>
                 <section class="container-modal-home_input-section">
@@ -168,12 +173,14 @@ const parsedForm = () => {
                         v-model="form.title"
                         placeholder="Digite o título"
                         clearable
+                        :disabled="loading"
                         prop="title"
                         label="Digite o título"
                     />
                     <section>
                         <DatePicker
                             v-model="form.date"
+                            :disabled="loading"
                             label="Escolha a data inicial e final"
                         />
                     </section>
@@ -182,6 +189,7 @@ const parsedForm = () => {
                     v-model="form.description"
                     prop="description"
                     label="Descrição"
+                    :disabled="loading"
                     type="textarea"
                 />
                 <section style="display: flex; text-align: center; align-self: center">
@@ -189,12 +197,14 @@ const parsedForm = () => {
                         v-if="props.isAddItem"
                         @click="saveTask"
                         style="width: 200px"
+                        :disabled="loading"
                         text="Salvar"
                     />
                     <Button
                         v-else
                         @click="editTask"
                         type="warning"
+                        :disabled-="loading"
                         style="width: 200px"
                         text="Editar"
                     />
