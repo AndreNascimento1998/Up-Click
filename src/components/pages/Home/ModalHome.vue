@@ -11,16 +11,25 @@ import {ElForm, ElNotification} from "element-plus"
 import useValidation from "@/composables/useValidation.ts"
 import {TaskListStore} from "@/stores/TaskListStore.ts"
 
+interface IForm {
+    id?: string
+    title: string
+    status: string
+    date: string[]
+    description: string
+    priority: boolean | undefined
+    createdAt?: string
+}
+
 const openModal = ref(false)
 
 const useTaskListStore = TaskListStore()
 
-const form = reactive<ITaskList>({
+const form = reactive<IForm>({
     id: '',
     title: '',
     status: 'pending' as string,
-    dateStart: '',
-    dateEnd: '',
+    date: [],
     description: '',
     priority: false as boolean | undefined,
     createdAt: ''
@@ -48,8 +57,7 @@ watch(() => props.item, (newValue: ITaskList) => {
         form.id = newValue.id
         form.title = newValue.title
         form.status = newValue.status
-        form.dateStart = newValue.dateStart
-        form.dateEnd =  newValue.dateEnd
+        form.date = [newValue.dateStart,  newValue.dateEnd]
         form.description = newValue.description
         form.priority = newValue.priority
         form.createdAt = newValue.createdAt
@@ -61,9 +69,10 @@ const handleClick = () => {
 }
 
 const saveTask = async () => {
+    const dataFormat = parsedForm()
     formRef.value?.validate( async (valid) => {
         if (valid) {
-            await useTaskListStore.addTask(form)
+            await useTaskListStore.addTask(dataFormat)
             resetData()
             ElNotification({
                 title: 'Sucesso',
@@ -79,9 +88,10 @@ const saveTask = async () => {
 }
 
 const editTask = async () => {
+    const dataFormat = parsedForm()
     formRef.value?.validate( async (valid) => {
         if (valid) {
-            await useTaskListStore.editTask(form)
+            await useTaskListStore.editTask(dataFormat)
             ElNotification({
                 title: 'Sucesso',
                 message: 'Tarefa salva com sucesso',
@@ -98,10 +108,22 @@ const editTask = async () => {
 const resetData = () => {
     form.title = ''
     form.status = 'pending'
-    form.dateStart = ''
-    form.dateEnd = ''
+    form.date = []
     form.description = ''
     form.priority = false
+}
+
+const parsedForm = () => {
+    return {
+        id: form.id,
+        title: form.title,
+        status: form.status,
+        dateStart: form.date[0],
+        dateEnd: form.date[1],
+        description: form.description,
+        priority: form.priority,
+        createdAt: form.createdAt
+    }
 }
 
 </script>
@@ -151,14 +173,8 @@ const resetData = () => {
                     />
                     <section>
                         <DatePicker
-                            v-model="form.dateStart"
-                            label="Escolha a data inicial"
-                        />
-                    </section>
-                    <section>
-                        <DatePicker
-                            v-model="form.dateEnd"
-                            label="Escolha a data final"
+                            v-model="form.date"
+                            label="Escolha a data inicial e final"
                         />
                     </section>
                 </section>
