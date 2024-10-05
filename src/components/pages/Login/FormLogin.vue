@@ -6,7 +6,6 @@ import Button from "@/components/base/Button/Button.vue"
 import useValidation from "@/composables/useValidation.ts"
 import router from "@/router/Index.ts"
 import { AuthStore } from "@/stores/AuthStore"
-import ModalRecoverPassword from "@/components/pages/Login/ModalRecoverPassword.vue"
 
 interface FormData {
     email: string
@@ -14,8 +13,6 @@ interface FormData {
 }
 
 const useAuthStore = AuthStore()
-
-const showModal = ref(false)
 
 const loading = ref(false)
 
@@ -83,7 +80,7 @@ const sendLogin = () => {
                     :disabled="loading"
                 />
                 <span
-                    @click="showModal = true"
+                    @click="$router.push({name: 'PasswordRecover'})"
                     class="container-form-login_input-password_text"
                 >
                     Esqueceu sua senha?
@@ -99,9 +96,6 @@ const sendLogin = () => {
             </article>
         </main>
     </el-form>
-    <ModalRecoverPassword
-        v-model="showModal"
-    />
 </template>
 
 <style scoped lang="scss">
