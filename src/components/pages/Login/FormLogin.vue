@@ -6,6 +6,7 @@ import Button from "@/components/base/Button/Button.vue";
 import useValidation from "@/composables/useValidation.ts";
 import router from "@/router/Index.ts";
 import { AuthStore } from "@/stores/AuthStore"
+import ModalRecoverPassword from "@/components/pages/Login/ModalRecoverPassword.vue";
 
 interface FormData {
     email: string;
@@ -13,6 +14,8 @@ interface FormData {
 }
 
 const useAuthStore = AuthStore()
+
+const showModal = ref(false)
 
 const loading = ref(false)
 
@@ -79,7 +82,12 @@ const sendLogin = () => {
                     placeholder="Digite sua senha"
                     :disabled="loading"
                 />
-                <span class="container-form-login_input-password_text">Esqueceu sua senha?</span>
+                <span
+                    @click="showModal = true"
+                    class="container-form-login_input-password_text"
+                >
+                    Esqueceu sua senha?
+                </span>
             </article>
 
             <article style="width: 100%">
@@ -91,6 +99,9 @@ const sendLogin = () => {
             </article>
         </main>
     </el-form>
+    <ModalRecoverPassword
+        v-model="showModal"
+    />
 </template>
 
 <style scoped lang="scss">

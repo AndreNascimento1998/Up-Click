@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDuTWOaZb-m8v1BvqYim3jMlvb-79NvXqY",
-    authDomain: "upclick-8205b.firebaseapp.com",
-    projectId: "upclick-8205b",
-    storageBucket: "upclick-8205b.appspot.com",
-    messagingSenderId: "162545740883",
-    appId: "1:162545740883:web:c9f538d6dd939be05f2aa6"
-};
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID
+}
 
 const app = initializeApp(firebaseConfig)
 

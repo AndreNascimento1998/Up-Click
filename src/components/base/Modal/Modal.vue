@@ -5,6 +5,11 @@ const showModal = ref(false)
 
 const emit = defineEmits(['update:modelValue'])
 
+const props = defineProps<{
+    title?: string
+}>()
+
+
 const handleClick = () => {
     emit('update:modelValue', false)
 }
@@ -15,7 +20,7 @@ const handleClick = () => {
         v-model="showModal"
         @update:modelValue="handleClick"
         class="width"
-        title="Outer Dialog"
+        :title="props.title"
         width="80%"
     >
         <slot />

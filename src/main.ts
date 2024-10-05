@@ -6,6 +6,9 @@ import router from "./router/Index.ts"
 import {createPinia} from "pinia"
 import ptBr from 'element-plus/es/locale/lang/pt-br'
 import './firebaseConfig'
+import {AuthStore} from "@/stores/AuthStore.ts"
+import {onAuthStateChanged} from "firebase/auth"
+import { auth } from '@/firebaseConfig.ts'
 
 const app = createApp(App)
 
@@ -14,5 +17,12 @@ app.use(pinia)
 app.use(ElementPlus, {
     locale: ptBr
 })
+
+const useAuthStore = AuthStore()
+
+onAuthStateChanged(auth, (authUser) => {
+    useAuthStore.user = authUser
+})
+
 app.use(router)
 app.mount('#app')
