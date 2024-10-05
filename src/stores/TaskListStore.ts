@@ -14,9 +14,21 @@ export const TaskListStore = defineStore('taskList', () => {
         await TaskListHttp.post(form)
     }
 
+    async function editTask(form: ITaskList) {
+        await TaskListHttp.put(form)
+    }
+
+    async function removeTask(id: string = '') {
+        if (id) {
+            await TaskListHttp.delete(id)
+        }
+    }
+
     return {
         taskList,
         addTask,
-        fetchTask
+        fetchTask,
+        editTask,
+        removeTask
     }
 })

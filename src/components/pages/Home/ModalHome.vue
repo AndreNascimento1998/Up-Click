@@ -16,12 +16,14 @@ const openModal = ref(false)
 const useTaskListStore = TaskListStore()
 
 const form = reactive<ITaskList>({
+    id: '',
     title: '',
     status: 'pending' as string,
     dateStart: '',
     dateEnd: '',
     description: '',
-    priority: false as boolean | undefined
+    priority: false as boolean | undefined,
+    createdAt: ''
 })
 
 const { minLength, required } = useValidation
@@ -38,16 +40,19 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
     titleHeader: string
     item: ITaskList
+    isAddItem?: boolean
 }>()
 
 watch(() => props.item, (newValue: ITaskList) => {
     if (newValue) {
+        form.id = newValue.id
         form.title = newValue.title
         form.status = newValue.status
         form.dateStart = newValue.dateStart
         form.dateEnd =  newValue.dateEnd
         form.description = newValue.description
         form.priority = newValue.priority
+        form.createdAt = newValue.createdAt
     }
 })
 
@@ -60,6 +65,23 @@ const saveTask = async () => {
         if (valid) {
             await useTaskListStore.addTask(form)
             resetData()
+            ElNotification({
+                title: 'Sucesso',
+                message: 'Tarefa salva com sucesso',
+                type: 'success'
+            })
+            openModal.value = false
+            await useTaskListStore.fetchTask()
+        } else {
+            console.log('Erro ao validar o formulário')
+        }
+    })
+}
+
+const editTask = async () => {
+    formRef.value?.validate( async (valid) => {
+        if (valid) {
+            await useTaskListStore.editTask(form)
             ElNotification({
                 title: 'Sucesso',
                 message: 'Tarefa salva com sucesso',
@@ -148,9 +170,17 @@ const resetData = () => {
                 />
                 <section style="display: flex; text-align: center; align-self: center">
                     <Button
+                        v-if="props.isAddItem"
                         @click="saveTask"
                         style="width: 200px"
                         text="Salvar"
+                    />
+                    <Button
+                        v-else
+                        @click="editTask"
+                        type="warning"
+                        style="width: 200px"
+                        text="Editar"
                     />
                 </section>
             </main>

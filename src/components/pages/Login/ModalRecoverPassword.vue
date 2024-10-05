@@ -30,7 +30,7 @@ const formRef = ref<InstanceType<typeof ElForm> | null>(null)
 const emit = defineEmits(['update:modelValue'])
 
 const handleClick = () => {
-    emit('update:modelValue', false)
+    emit('update:modelValue', openModal.value)
 }
 
 const recoverPassword = async () => {

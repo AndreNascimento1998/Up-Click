@@ -1,11 +1,13 @@
 <script setup lang="ts">
-
 import CardText from "@/components/base/Card/CardText.vue";
 import DataTable from "@/components/base/DataTable/DataTable.vue";
 import ITaskList from "@/types/ITaskList.ts";
 import {ref} from "vue";
 import ModalHome from "@/components/pages/Home/ModalHome.vue";
 import Swal from "sweetalert2";
+import {TaskListStore} from "@/stores/TaskListStore.ts";
+
+const useTasklistStore = TaskListStore()
 
 const headers = [
     {
@@ -26,7 +28,7 @@ const headers = [
     {
         prop: 'dateEnd',
         title: 'Data Final',
-        width: 280
+        width: 250
     },
 ]
 
@@ -63,6 +65,7 @@ const handleAdd = () => {
     openModal.value = true
     titleDynamic.value  = 'Adicionar Tarefa'
     itemModal.value = {
+        id: '',
         title: '',
         status: 'pending',
         dateStart: '',
@@ -83,6 +86,8 @@ const handleRemove = (item: ITaskList) => {
         confirmButtonText: 'Sim, deletar!'
     }).then((result) => {
         if (result.isConfirmed) {
+            useTasklistStore.removeTask(item.id)
+            useTasklistStore.fetchTask()
             Swal.fire(
                 'Deletado!',
                 'Sua tarefa foi deletada.',
@@ -115,9 +120,11 @@ const handleRemove = (item: ITaskList) => {
                 button-text="Adicionar Tarefa"
             />
         </section>
+
         <ModalHome
             v-model="openModal"
             :title-header="titleDynamic"
+            :isAddItem="titleDynamic === 'Adicionar Tarefa'"
             :item="itemModal"
         />
     </main>
