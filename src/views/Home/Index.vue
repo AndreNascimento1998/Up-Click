@@ -2,7 +2,7 @@
 import Header from "@/views/Header/Index.vue"
 import ListIcon from "@/assets/icons/Home/ListIcon.vue"
 import List from "@/components/pages/Home/List.vue"
-import {computed, onMounted, ref} from "vue"
+import {computed, onMounted} from "vue"
 import ITaskList from "@/types/ITaskList.ts"
 import dayjs from "dayjs"
 import {TaskListStore} from "@/stores/TaskListStore.ts";
