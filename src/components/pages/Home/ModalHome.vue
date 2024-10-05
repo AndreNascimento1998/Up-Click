@@ -84,8 +84,8 @@ const saveTask = async () => {
                 message: 'Tarefa salva com sucesso',
                 type: 'success'
             })
-            openModal.value = false
             await useTaskListStore.fetchTask()
+            openModal.value = false
         } else {
             console.log('Erro ao validar o formulário')
         }
@@ -102,8 +102,8 @@ const editTask = async () => {
                 message: 'Tarefa salva com sucesso',
                 type: 'success'
             })
-            openModal.value = false
             await useTaskListStore.fetchTask()
+            openModal.value = false
         } else {
             console.log('Erro ao validar o formulário')
         }
@@ -138,6 +138,7 @@ const parsedForm = () => {
         v-model="openModal"
         @update:modelValue="handleClick"
         :title="props.titleHeader"
+        :modal-update="openModal"
     >
         <el-form :model="form" :rules="rules" ref="formRef">
             <main class="container-modal-home">

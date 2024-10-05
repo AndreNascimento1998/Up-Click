@@ -8,9 +8,14 @@ const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
     modelValue: boolean,
     title?: string,
+    modalUpdate?: boolean
 }>()
 
 watch(() => props.modelValue, (newValue) => {
+    showModal.value = newValue
+})
+
+watch(() => props.modalUpdate, (newValue) => {
     showModal.value = newValue
 })
 
