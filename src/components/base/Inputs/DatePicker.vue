@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {onMounted, ref, watch} from 'vue'
-import {dayjs} from "element-plus";
+import {dayjs} from "element-plus"
 
 const value = ref(dayjs().format('YYYY-MM-DD'))
 

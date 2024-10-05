@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import Modal from "@/components/base/Modal/Modal.vue"
 import {computed, reactive, ref, watch} from "vue"
-import ITaskList from "@/types/ITaskList.ts";
-import Input from "@/components/base/Inputs/Input.vue";
-import CardText from "@/components/base/Card/CardText.vue";
-import DatePicker from "@/components/base/Inputs/DatePicker.vue";
-import Button from "@/components/base/Button/Button.vue";
-import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue";
-import {ElForm} from "element-plus";
-import useValidation from "@/composables/useValidation.ts";
+import ITaskList from "@/types/ITaskList.ts"
+import Input from "@/components/base/Inputs/Input.vue"
+import CardText from "@/components/base/Card/CardText.vue"
+import DatePicker from "@/components/base/Inputs/DatePicker.vue"
+import Button from "@/components/base/Button/Button.vue"
+import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
+import {ElForm} from "element-plus"
+import useValidation from "@/composables/useValidation.ts"
 
 const openModal = ref(false)
 

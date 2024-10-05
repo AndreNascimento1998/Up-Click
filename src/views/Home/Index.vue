@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import Header from "@/views/Header/Index.vue";
-import ListIcon from "@/assets/icons/Home/ListIcon.vue";
+import Header from "@/views/Header/Index.vue"
+import ListIcon from "@/assets/icons/Home/ListIcon.vue"
 import tasks from '@/mocks/tasks.json'
-import List from "@/components/pages/Home/List.vue";
-import {computed, ref} from "vue";
-import ITaskList from "@/types/ITaskList.ts";
-import dayjs from "dayjs";
+import List from "@/components/pages/Home/List.vue"
+import {computed, ref} from "vue"
+import ITaskList from "@/types/ITaskList.ts"
+import dayjs from "dayjs"
 
 // TODO: move the logic to pis, when it comes from a request
 const taskList = ref<ITaskList[]>(tasks)

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import Logo from '@/assets/icons/Logo/Index.vue'
-import Dropdown from "@/components/base/Dropdown/Dropdown.vue";
+import Dropdown from "@/components/base/Dropdown/Dropdown.vue"
 import { AuthStore } from "@/stores/AuthStore"
-import router from "@/router/Index.ts";
+import router from "@/router/Index.ts"
 
 const useAuthStore = AuthStore()
 
