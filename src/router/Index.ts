@@ -8,6 +8,11 @@ const routes = [
         component: () => import('@/views/Login/Index.vue')
     },
     {
+        path: '/recover-password',
+        name: 'PasswordRecover',
+        component: () => import('@/views/Login/PasswordRecover.vue'),
+    },
+    {
         path: '/',
         name: 'Home',
         component: () => import('@/views/Home/Index.vue'),
