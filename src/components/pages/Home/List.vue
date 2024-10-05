@@ -62,7 +62,14 @@ const handleItemClicked = (item: ITaskList) => {
 const handleAdd = () => {
     openModal.value = true
     titleDynamic.value  = 'Adicionar Tarefa'
-    itemModal.value = {} as ITaskList
+    itemModal.value = {
+        title: '',
+        status: 'pending',
+        dateStart: '',
+        dateEnd: '',
+        description: '',
+        priority: false
+    } as ITaskList
 }
 
 const handleRemove = (item: ITaskList) => {

@@ -14,7 +14,7 @@ const openModal = ref(false)
 
 const form = reactive({
     title: '',
-    status: '',
+    status: 'pending' as string,
     dateStart: '',
     dateEnd: '',
     description: '',
@@ -38,12 +38,14 @@ const props = defineProps<{
 }>()
 
 watch(() => props.item, (newValue: ITaskList) => {
-    form.title = newValue.title
-    form.status = newValue.status
-    form.dateStart = newValue.dateStart
-    form.dateEnd =  newValue.dateEnd
-    form.description = newValue.description
-    form.priority = newValue.priority
+    if (newValue) {
+        form.title = newValue.title
+        form.status = newValue.status
+        form.dateStart = newValue.dateStart
+        form.dateEnd =  newValue.dateEnd
+        form.description = newValue.description
+        form.priority = newValue.priority
+    }
 })
 
 const handleClick = () => {
