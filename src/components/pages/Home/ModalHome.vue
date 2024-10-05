@@ -145,7 +145,7 @@ const parsedForm = () => {
                     :text="form.status === 'completed' ? 'Tarefa concluída' : 'Tarefa pendente'"
                     :color="form.status === 'completed' ? 'green' : 'yellow'"
                     dropdown
-
+                    :disabled="loading"
                 >
                     <article class="container-modal-home_options-modal">
                         <div
