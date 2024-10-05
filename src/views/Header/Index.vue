@@ -23,7 +23,7 @@ const logout = async () => {
 <template>
     <main class="container-header">
         <Logo />
-        <article class="container-header_">
+        <article>
             <Dropdown
                 :text="useAuthStore.user?.email"
                 rounded
