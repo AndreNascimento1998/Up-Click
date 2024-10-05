@@ -56,7 +56,6 @@ const recoverPassword = async () => {
 </script>
 
 <template>
-    {{useGlobalStore.loading}}
     <el-form :model="formData" :rules="rules" ref="formRef">
     <main class="container-recover-password">
         <section class="container-recover-password_section">
