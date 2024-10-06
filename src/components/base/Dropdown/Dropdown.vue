@@ -9,14 +9,17 @@ interface OptionInterface {
 
 const props = defineProps<{
     options: OptionInterface[]
-    text: string
+    text: string | undefined
     rounded?: boolean
     item?: ITaskList
     disabled?: boolean
 }>()
 
 const textParsed = computed(() => {
-    return props.text.split('')[0].toUpperCase()
+    if (props.text) {
+        return props.text.split('')[0].toUpperCase()
+    }
+    return ''
 })
 </script>
 

@@ -21,7 +21,10 @@ app.use(ElementPlus, {
 const useAuthStore = AuthStore()
 
 onAuthStateChanged(auth, (authUser) => {
-    useAuthStore.user = authUser
+    console.log(auth.currentUser)
+    if (authUser) {
+        useAuthStore.user = authUser
+    }
 })
 
 app.use(router)
