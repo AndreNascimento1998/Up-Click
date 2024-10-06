@@ -25,17 +25,26 @@ const router = createRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
-    const auth = getAuth()
+router.beforeEach(async (to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-    onAuthStateChanged(auth, (user) => {
-        if (requiresAuth && !user) {
-            next({ name: 'Login' })
-        } else {
-            next()
-        }
-    })
+    const user = await checkAuth()
+
+    if (requiresAuth && !user) {
+        next({ name: 'Login' })
+    } else {
+        next()
+    }
 })
+
+const checkAuth = () => {
+    const auth = getAuth()
+    return new Promise((resolve) => {
+        onAuthStateChanged(auth, (user) => {
+            resolve(user)
+        })
+    })
+}
+
 
 export default router
