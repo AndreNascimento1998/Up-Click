@@ -2,28 +2,29 @@
 import {onMounted, ref, watch} from 'vue'
 import {dayjs} from "element-plus"
 
-const value = ref(dayjs().format('YYYY-MM-DD'))
+const value = ref([dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')])
 
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps<{
     label: string
-    modelValue: string | undefined
+    modelValue: string[] | undefined
+    disabled?: boolean
 }>()
 
 onMounted(() => {
-    if (props.modelValue) {
+    if (props.modelValue && props.modelValue[0]) {
         value.value = props.modelValue
     } else {
         emit('update:modelValue', value.value)
     }
 })
 
-watch(() => props.modelValue, (newValue: string | undefined) => {
-    if (newValue) {
+watch(() => props.modelValue, (newValue: string[] | undefined) => {
+    if (newValue && newValue[0]) {
         value.value = newValue
     } else {
-        value.value = dayjs().format('YYYY-MM-DD')
+        value.value = [dayjs().format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')]
         emit('update:modelValue', value.value)
     }
 })
@@ -37,15 +38,14 @@ watch(() => props.modelValue, (newValue: string | undefined) => {
             style="width: 100%"
             v-model="value"
             @change="emit('update:modelValue', value)"
-            type="date"
-            start-placeholder="Data inicial"
-            end-placeholder="Data final"
+            :disabled="disabled"
+            type="daterange"
             format="DD/MM/YYYY"
             value-format="YYYY-MM-DD"
             :clearable="false"
         />
-
     </div>
+
 </template>
 
 <style scoped lang="scss">

@@ -2,12 +2,15 @@
 import CardText from "@/components/base/Card/CardText.vue";
 import DataTable from "@/components/base/DataTable/DataTable.vue";
 import ITaskList from "@/types/ITaskList.ts";
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import ModalHome from "@/components/pages/Home/ModalHome.vue";
 import Swal from "sweetalert2";
 import {TaskListStore} from "@/stores/TaskListStore.ts";
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
 
 const useTasklistStore = TaskListStore()
+
+const useGlobalStore = GlobalStore()
 
 const headers = [
     {
@@ -55,6 +58,8 @@ const props = defineProps<{
     color?: string
 }>()
 
+const loading = computed(() => useGlobalStore.loading)
+
 const handleItemClicked = (item: ITaskList) => {
     openModal.value = true
     titleDynamic.value  = 'Editando Tarefa'
@@ -95,7 +100,6 @@ const handleRemove = (item: ITaskList) => {
             )
         }
     })
-    console.log('Remover Tarefa', item)
 }
 </script>
 
@@ -115,6 +119,7 @@ const handleRemove = (item: ITaskList) => {
                 :options-dropdown="optionsDropdown"
                 :headers="headers"
                 :table-data="props.list"
+                :disabled="loading"
                 priority
                 operation
                 button-text="Adicionar Tarefa"

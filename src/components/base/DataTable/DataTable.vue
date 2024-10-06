@@ -25,22 +25,12 @@ const props = defineProps<{
     priority?: boolean
     operation?: boolean
     buttonText?: string
+    disabled?: boolean
     optionsDropdown?: {
         name: string
         action: (item: ITaskList) => void
     }[] | undefined
 }>()
-
-// If it makes sense to click on the line to output its entire value, uncomment the code below
-// const tabletWidth = ref(false)
-// onMounted(() => {
-//     tabletWidth.value = window.innerWidth <= 1024
-// })
-// const handleClickRow = (item: ITaskList) => {
-//     if (!tabletWidth.value) {
-//         emit('click-row', item)
-//     }
-// }
 
 const handleAdd = () => {
     emit('click-button-add')
@@ -94,6 +84,7 @@ const formatDate = (date: string) => {
     <Button
         v-if="props.buttonText"
         type="primary"
+        :disabled="disabled"
         :text="props.buttonText"
         @click="handleAdd"
         outlined

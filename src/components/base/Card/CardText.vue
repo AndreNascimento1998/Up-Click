@@ -8,6 +8,7 @@ const props = defineProps<{
     text: string
     color?: string
     dropdown?: boolean
+    disabled?: boolean
 }>()
 
 const open = ref(false)
@@ -20,7 +21,8 @@ const open = ref(false)
         @click="open = !open"
         :class="{
             'color-text-white': props.color === 'green',
-            'cursor-pointer': props.dropdown
+            'cursor-pointer': props.dropdown,
+            'disabled-color': props.disabled && props.dropdown
         }"
     >
         <article
@@ -33,7 +35,7 @@ const open = ref(false)
         <ChevronUp v-else-if="props.dropdown && open" />
 
         <section
-            v-if="props.dropdown"
+            v-if="props.dropdown && !props.disabled"
             class="container-cart-text_list"
             :class="{'container-cart-text_active': open, 'container-cart-text_inactive': !open}"
         >
@@ -80,9 +82,9 @@ const open = ref(false)
 
     &_list {
         position: absolute;
-        background-color: #e6e6e6;
+        background-color: #ede8e8;
         padding: 12px 12px;
-        width: 89%;
+        width: 88%;
         color: $title-color;
         font-size: 16px;
         z-index: 20;
@@ -108,6 +110,11 @@ const open = ref(false)
 .color-text-white {
     background-color: $bg-card-text;
     color: white;
+}
+
+.disabled-color {
+    background-color: #c3c2c2;
+    color: #d8d8d8;
 }
 
 @keyframes fadeIn {

@@ -3,8 +3,12 @@ import Logo from '@/assets/icons/Logo/Index.vue'
 import Dropdown from "@/components/base/Dropdown/Dropdown.vue"
 import { AuthStore } from "@/stores/AuthStore"
 import router from "@/router/Index.ts"
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
+import {computed} from "vue";
 
 const useAuthStore = AuthStore()
+
+const useGlobalStore = GlobalStore()
 
 const optionsDropdown = [
     {
@@ -12,6 +16,8 @@ const optionsDropdown = [
         action: () => logout()
     }
 ]
+
+const loading = computed(() => useGlobalStore.loading)
 
 const logout = async () => {
     await useAuthStore.logout()
@@ -28,6 +34,7 @@ const logout = async () => {
                 :text="useAuthStore.user?.email"
                 rounded
                 :options="optionsDropdown"
+                :loading="loading"
             />
         </article>
     </main>

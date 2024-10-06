@@ -10,17 +10,29 @@ import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
 import {ElForm, ElNotification} from "element-plus"
 import useValidation from "@/composables/useValidation.ts"
 import {TaskListStore} from "@/stores/TaskListStore.ts"
+import {GlobalStore} from "@/stores/useGlobalStore.ts";
+
+interface IForm {
+    id?: string
+    title: string
+    status: string
+    date: string[]
+    description: string
+    priority: boolean | undefined
+    createdAt?: string
+}
 
 const openModal = ref(false)
 
+const useGlobalStore = GlobalStore()
+
 const useTaskListStore = TaskListStore()
 
-const form = reactive<ITaskList>({
+const form = reactive<IForm>({
     id: '',
     title: '',
     status: 'pending' as string,
-    dateStart: '',
-    dateEnd: '',
+    date: [],
     description: '',
     priority: false as boolean | undefined,
     createdAt: ''
@@ -43,13 +55,14 @@ const props = defineProps<{
     isAddItem?: boolean
 }>()
 
+const loading = computed(() => useGlobalStore.loading)
+
 watch(() => props.item, (newValue: ITaskList) => {
     if (newValue) {
         form.id = newValue.id
         form.title = newValue.title
         form.status = newValue.status
-        form.dateStart = newValue.dateStart
-        form.dateEnd =  newValue.dateEnd
+        form.date = [newValue.dateStart,  newValue.dateEnd]
         form.description = newValue.description
         form.priority = newValue.priority
         form.createdAt = newValue.createdAt
@@ -61,17 +74,18 @@ const handleClick = () => {
 }
 
 const saveTask = async () => {
+    const dataFormat = parsedForm()
     formRef.value?.validate( async (valid) => {
         if (valid) {
-            await useTaskListStore.addTask(form)
+            await useTaskListStore.addTask(dataFormat)
             resetData()
             ElNotification({
                 title: 'Sucesso',
                 message: 'Tarefa salva com sucesso',
                 type: 'success'
             })
-            openModal.value = false
             await useTaskListStore.fetchTask()
+            openModal.value = false
         } else {
             console.log('Erro ao validar o formulário')
         }
@@ -79,16 +93,17 @@ const saveTask = async () => {
 }
 
 const editTask = async () => {
+    const dataFormat = parsedForm()
     formRef.value?.validate( async (valid) => {
         if (valid) {
-            await useTaskListStore.editTask(form)
+            await useTaskListStore.editTask(dataFormat)
             ElNotification({
                 title: 'Sucesso',
                 message: 'Tarefa salva com sucesso',
                 type: 'success'
             })
-            openModal.value = false
             await useTaskListStore.fetchTask()
+            openModal.value = false
         } else {
             console.log('Erro ao validar o formulário')
         }
@@ -98,10 +113,22 @@ const editTask = async () => {
 const resetData = () => {
     form.title = ''
     form.status = 'pending'
-    form.dateStart = ''
-    form.dateEnd = ''
+    form.date = []
     form.description = ''
     form.priority = false
+}
+
+const parsedForm = () => {
+    return {
+        id: form.id,
+        title: form.title,
+        status: form.status,
+        dateStart: form.date[0],
+        dateEnd: form.date[1],
+        description: form.description,
+        priority: form.priority,
+        createdAt: form.createdAt
+    }
 }
 
 </script>
@@ -111,6 +138,7 @@ const resetData = () => {
         v-model="openModal"
         @update:modelValue="handleClick"
         :title="props.titleHeader"
+        :modal-update="openModal"
     >
         <el-form :model="form" :rules="rules" ref="formRef">
             <main class="container-modal-home">
@@ -118,7 +146,7 @@ const resetData = () => {
                     :text="form.status === 'completed' ? 'Tarefa concluída' : 'Tarefa pendente'"
                     :color="form.status === 'completed' ? 'green' : 'yellow'"
                     dropdown
-
+                    :disabled="loading"
                 >
                     <article class="container-modal-home_options-modal">
                         <div
@@ -138,7 +166,7 @@ const resetData = () => {
                 <h1 v-if="form.title">{{ form.title }}</h1>
                 <h1 v-else>Título exemplo</h1>
                 <section class="container-modal-home_priority">
-                    <span>Prioridade: </span>
+                    <span>Defina a prioridade: </span>
                     <FlagPriorityIcon style="cursor: pointer" @click="form.priority = !form.priority" :color="form.priority ? '#E60000FF': '#000'" />
                 </section>
                 <section class="container-modal-home_input-section">
@@ -146,19 +174,15 @@ const resetData = () => {
                         v-model="form.title"
                         placeholder="Digite o título"
                         clearable
+                        :disabled="loading"
                         prop="title"
                         label="Digite o título"
                     />
                     <section>
                         <DatePicker
-                            v-model="form.dateStart"
-                            label="Escolha a data inicial"
-                        />
-                    </section>
-                    <section>
-                        <DatePicker
-                            v-model="form.dateEnd"
-                            label="Escolha a data final"
+                            v-model="form.date"
+                            :disabled="loading"
+                            label="Escolha a data inicial e final"
                         />
                     </section>
                 </section>
@@ -166,6 +190,7 @@ const resetData = () => {
                     v-model="form.description"
                     prop="description"
                     label="Descrição"
+                    :disabled="loading"
                     type="textarea"
                 />
                 <section style="display: flex; text-align: center; align-self: center">
@@ -173,12 +198,14 @@ const resetData = () => {
                         v-if="props.isAddItem"
                         @click="saveTask"
                         style="width: 200px"
+                        :disabled="loading"
                         text="Salvar"
                     />
                     <Button
                         v-else
                         @click="editTask"
                         type="warning"
+                        :disabled-="loading"
                         style="width: 200px"
                         text="Editar"
                     />

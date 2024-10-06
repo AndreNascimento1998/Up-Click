@@ -12,6 +12,7 @@ const props = defineProps<{
     text: string
     rounded?: boolean
     item?: ITaskList
+    disabled?: boolean
 }>()
 
 const textParsed = computed(() => {
@@ -21,7 +22,7 @@ const textParsed = computed(() => {
 
 <template>
     <main class="container-dropdown">
-        <el-dropdown placement="top-start">
+        <el-dropdown :disabled="props.disabled" placement="top-start">
             <el-avatar v-if="props.rounded" class="container-dropdown_avatar">
                 <span class="container-dropdown_avatar_text">
                     {{ textParsed }}
