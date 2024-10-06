@@ -22,4 +22,5 @@ jobs:
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_UPCLICK_9F7F5 }}'
+          channelId: live
           projectId: upclick-9f7f5
