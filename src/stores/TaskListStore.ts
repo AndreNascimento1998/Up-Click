@@ -10,7 +10,6 @@ export const TaskListStore = defineStore('taskList', () => {
     let taskList = ref<ITaskList[]>([])
 
     async function fetchTask() {
-        useGlobalStore.loading = true
         taskList.value = await TaskListHttp.get()
         useGlobalStore.loading = false
     }
