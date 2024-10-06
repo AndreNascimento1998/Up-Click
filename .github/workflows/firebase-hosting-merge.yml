@@ -9,6 +9,14 @@ name: Deploy to Firebase Hosting on merge
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    env:
+      VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+      VITE_AUTH_DOMAIN: 'upclick-9f7f5.firebaseapp.com'
+      VITE_DATABASEURL: 'upclick-9f7f5-default-rtdb.firebaseio.com'
+      VITE_PROJECT_ID: 'upclick-9f7f5'
+      VITE_STORAGE_BUCKET: 'upclick-9f7f5.appspot.com'
+      VITE_MESSAGING_SENDER_ID: '386067430651'
+      VITE_APP_ID: '1:386067430651:web:b53bb76f416b11837f445e'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
