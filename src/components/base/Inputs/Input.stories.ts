@@ -6,8 +6,10 @@ interface StoryArgs {
     placeholder: string
     disabled: boolean
     clearable: boolean
-    type: 'text' | 'password'
+    type: 'text' | 'password | textarea'
     prop: string
+    minRows: number
+    maxRows: number
 }
 
 export default {
@@ -20,9 +22,11 @@ export default {
         clearable: { control: 'boolean' },
         type: {
             control: { type: 'select'},
-            options: ['text', 'password']
+            options: ['text', 'password | textarea'],
         },
         prop: { control: 'text' },
+        minRows: { control: 'number' },
+        maxRows: { control: 'number' },
     },
 } as Meta
 
@@ -56,4 +60,14 @@ Password.args = {
     clearable: false,
     type: 'password',
     prop: 'password',
+}
+
+export const TextArea = Template.bind({})
+TextArea.args = {
+    label: 'Text Area',
+    placeholder: 'Digite texto grande',
+    disabled: false,
+    clearable: false,
+    type: 'textarea',
+    prop: 'description',
 }
