@@ -87,7 +87,11 @@ const saveTask = async () => {
             await useTaskListStore.fetchTask()
             openModal.value = false
         } else {
-            console.log('Erro ao validar o formulário')
+            ElNotification({
+                title: 'Erro',
+                message: 'Erro ao salvar a tarefa',
+                type: 'error'
+            })
         }
     })
 }
@@ -105,7 +109,11 @@ const editTask = async () => {
             await useTaskListStore.fetchTask()
             openModal.value = false
         } else {
-            console.log('Erro ao validar o formulário')
+            ElNotification({
+                title: 'Erro',
+                message: 'Erro ao salvar a tarefa',
+                type: 'error'
+            })
         }
     })
 }

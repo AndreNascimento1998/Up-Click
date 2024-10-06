@@ -1,10 +1,9 @@
 import { auth } from '@/firebaseConfig.ts'
 import { getDatabase, push, ref, set, get, update } from "firebase/database"
-import firebase from "firebase/compat"
 import ITaskList from "@/types/ITaskList.ts"
 
 class TaskListHttp {
-    private db: firebase.database.Database
+    private readonly db
 
     constructor() {
         this.db = getDatabase()

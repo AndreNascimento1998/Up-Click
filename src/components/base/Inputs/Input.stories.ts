@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/vue3'
+import {Meta, StoryFn} from '@storybook/vue3'
 import Input from './Input.vue'
 
 interface StoryArgs {
@@ -6,7 +6,7 @@ interface StoryArgs {
     placeholder: string
     disabled: boolean
     clearable: boolean
-    type: 'text' | 'password | textarea'
+    type: string
     prop: string
     minRows: number
     maxRows: number
@@ -28,9 +28,9 @@ export default {
         minRows: { control: 'number' },
         maxRows: { control: 'number' },
     },
-} as Meta
+} as Meta<StoryArgs>
 
-const Template: Story = (args: StoryArgs) => ({
+const Template: StoryFn<StoryArgs> = (args: StoryArgs) => ({
     components: { Input },
     setup() {
         return { args }

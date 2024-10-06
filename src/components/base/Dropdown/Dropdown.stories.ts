@@ -1,6 +1,12 @@
 import Dropdown from './Dropdown.vue'
 import { Meta, StoryFn } from '@storybook/vue3'
 
+interface DropdownArgs {
+    text: string
+    options: Array<{ name: string, action: () => void }>
+    rounded?: boolean
+}
+
 export default {
     title: 'Components/Dropdowns/Dropdown',
     component: Dropdown,
@@ -11,9 +17,9 @@ export default {
         },
         rounded: { control: 'boolean' },
     }
-} as Meta
+} as Meta<DropdownArgs>
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<DropdownArgs> = (args: any) => ({
     components: { Dropdown },
     setup() {
         return { args }
@@ -37,7 +43,7 @@ Default.args = {
 export const Rounded = Template.bind({});
 Rounded.args = {
     text: 'John Doe',
-    rounded: 'true',
+    rounded: true,
     options: [
         { name: 'action 1', action: () => alert('Action 1') },
         { name: 'action 2', action: () => alert('Action 2') },

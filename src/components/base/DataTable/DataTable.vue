@@ -6,6 +6,11 @@ import Dropdown from "@/components/base/Dropdown/Dropdown.vue"
 import dayjs from "dayjs"
 import Tooltip from "@/components/base/Tooltip/Tooltip.vue";
 
+interface OptionInterface {
+    name: string
+    action: (item: ITaskList | undefined | null | string | number) => void
+}
+
 const emit = defineEmits(['click-row', 'click-button-add'])
 
 const props = defineProps<{
@@ -14,23 +19,12 @@ const props = defineProps<{
         title: string
         width: number
     }[]
-    tableData: {
-        id: string
-        title: string
-        description: string
-        status: string
-        dateStart: string
-        dateEnd: string
-        priority?: boolean
-    }[]
+    tableData: ITaskList[]
     priority?: boolean
     operation?: boolean
     buttonText?: string
     disabled?: boolean
-    optionsDropdown?: {
-        name: string
-        action: (item: ITaskList) => void
-    }[] | undefined
+    optionsDropdown?: OptionInterface
 }>()
 
 const handleAdd = () => {
@@ -91,7 +85,7 @@ const formatDescription = (description: string) => {
                     <Dropdown
                         text="Gerenciar"
                         :item="scope.row"
-                        :options="props.optionsDropdown"
+                        :options="props.optionsDropdown as any"
                     />
                 </div>
             </template>

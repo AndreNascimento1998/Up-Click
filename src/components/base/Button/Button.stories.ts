@@ -1,11 +1,13 @@
 import Button from "./Button.vue";
-import {Meta, Story} from "@storybook/vue3";
+import {Meta, StoryFn} from "@storybook/vue3";
 
 interface ButtonArgs {
     text: string,
     disabled: boolean,
     type: string,
-    nativeType: string
+    nativeType: string,
+    outlined: boolean,
+    comfortable: boolean
 }
 
 export default {
@@ -13,24 +15,24 @@ export default {
     component: Button,
     argTypes: {
         text: { control: 'text' },
-        disabled: { control: 'boolean'},
+        disabled: { control: 'boolean' },
         type: {
-            control: { type: 'select'},
+            control: { type: 'select' },
             options: ['primary', 'success', 'info', 'warning', 'danger']
         },
         nativeType: {
             control: { type: 'select' },
             options: ['button', 'submit', 'reset']
         },
-        outlined: { control: 'boolean'},
-        comfortable: { control: 'boolean'}
+        outlined: { control: 'boolean' },
+        comfortable: { control: 'boolean' }
     }
-} as Meta
+} as Meta<ButtonArgs>
 
-const Template: Story = (args: ButtonArgs) => ({
+const Template: StoryFn<ButtonArgs> = (args: any) => ({
     components: { Button },
     setup() {
-        return { args}
+        return { args }
     },
     template: `
         <div style="width: 240px">
@@ -39,15 +41,17 @@ const Template: Story = (args: ButtonArgs) => ({
     `
 })
 
-export const Default = Template.bind({})
+export const Default = Template.bind({});
 Default.args = {
     text: 'Button',
     disabled: false,
     type: 'primary',
-    nativeType: 'button'
-}
+    nativeType: 'button',
+    outlined: false,
+    comfortable: false
+};
 
-export const Outlined = Template.bind({})
+export const Outlined = Template.bind({});
 Outlined.args = {
     text: 'Button Outlined',
     disabled: false,
@@ -55,4 +59,4 @@ Outlined.args = {
     nativeType: 'button',
     outlined: true,
     comfortable: true
-}
+};

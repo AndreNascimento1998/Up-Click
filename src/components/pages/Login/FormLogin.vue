@@ -59,7 +59,7 @@ const sendLogin = () => {
 </script>
 
 <template>
-    <el-form :model="formData" :rules="rules" ref="formRef">
+    <el-form :model="formData" :rules="rules as any" ref="formRef">
         <main class="container-form-login">
             <article>
                 <Input

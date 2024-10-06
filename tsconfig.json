@@ -8,7 +8,7 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "allowJs": true,
     "paths": {
       "@/*": [

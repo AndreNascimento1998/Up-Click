@@ -1,9 +1,9 @@
 import Modal from "@/components/base/Modal/Modal.vue"
 import Button from "@/components/base/Button/Button.vue"
-import {Meta, Story} from "@storybook/vue3"
+import {Meta, StoryFn} from "@storybook/vue3"
 import {ref} from 'vue'
 
-interface StoryArgs {
+interface ModalArgs {
     title: string
     modalUpdate?: boolean
     modelValue: boolean
@@ -17,9 +17,9 @@ export default {
         modalUpdate: { control: "boolean" },
         modelValue: { control: "boolean" },
     },
-} as Meta
+} as Meta<ModalArgs>
 
-const Template: Story = (args: StoryArgs) => ({
+const Template: StoryFn<ModalArgs> = (args: ModalArgs) => ({
     components: { Modal, Button },
     setup() {
         const showModal = ref(args.modelValue)
@@ -41,9 +41,8 @@ const Template: Story = (args: StoryArgs) => ({
     `,
 })
 
-export const Default = Template.bind({})
-Default.args = {
+export const Default = Template.bind({
     title: 'Título do Modal',
     modalUpdate: false,
     modelValue: false,
-}
+})

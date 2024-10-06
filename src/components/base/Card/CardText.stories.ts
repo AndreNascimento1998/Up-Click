@@ -1,7 +1,7 @@
 import CardText from "@/components/base/Card/CardText.vue";
-import {Meta, Story} from "@storybook/vue3";
+import {Meta, StoryFn} from "@storybook/vue3";
 
-interface StoryArgs {
+interface CardTextArgs {
     text: string
     color: 'green' | 'yellow'
     dropdown?: boolean
@@ -17,9 +17,9 @@ export default {
         dropdown: { control: 'boolean' },
         disabled: { control: 'boolean' },
     },
-} as Meta
+} as Meta<CardTextArgs>
 
-const Tempalte: Story = (args: StoryArgs) => ({
+const Template: StoryFn<CardTextArgs> = (args: any) => ({
     components: { CardText },
     setup() {
         return { args }
@@ -32,7 +32,7 @@ const Tempalte: Story = (args: StoryArgs) => ({
     `,
 })
 
-export const Default = Tempalte.bind({})
+export const Default = Template.bind({})
 Default.args = {
     text: 'Texto do CardText',
     color: 'green',
@@ -40,7 +40,7 @@ Default.args = {
     disabled: false,
 }
 
-export const Dropdown = Tempalte.bind({})
+export const Dropdown = Template.bind({})
 Dropdown.args = {
     text: 'Texto do CardText',
     color: 'yellow',
