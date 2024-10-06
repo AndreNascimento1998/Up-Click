@@ -14,15 +14,7 @@ const props = defineProps<{
         title: string
         width: number
     }[]
-    tableData: {
-        id: string
-        title: string
-        description: string
-        status: string
-        dateStart: string
-        dateEnd: string
-        priority?: boolean
-    }[]
+    tableData: ITaskList[]
     priority?: boolean
     operation?: boolean
     buttonText?: string
