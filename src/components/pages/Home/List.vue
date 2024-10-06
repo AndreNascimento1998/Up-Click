@@ -19,19 +19,24 @@ const headers = [
         width: 300,
     },
     {
+        prop: 'description',
+        title: 'Descrição',
+        width: 300
+    },
+    {
         prop: 'createdAt',
         title: 'Data de criação',
-        width: 250
+        width: 180
     },
     {
         prop: 'dateStart',
         title: 'Data de Início',
-        width: 250
+        width: 180
     },
     {
         prop: 'dateEnd',
         title: 'Data Final',
-        width: 250
+        width: 180
     },
 ]
 

@@ -4,6 +4,7 @@ import FlagPriorityIcon from "@/assets/icons/Home/FlagPriorityIcon.vue"
 import Button from "@/components/base/Button/Button.vue"
 import Dropdown from "@/components/base/Dropdown/Dropdown.vue"
 import dayjs from "dayjs"
+import Tooltip from "@/components/base/Tooltip/Tooltip.vue";
 
 const emit = defineEmits(['click-row', 'click-button-add'])
 
@@ -39,6 +40,10 @@ const handleAdd = () => {
 const formatDate = (date: string) => {
     return dayjs(date).format('DD/MM/YYYY')
 }
+
+const formatDescription = (description: string) => {
+    return description.length > 68 ? `${description.substring(0, 68)}...` : description
+}
 </script>
 
 <template>
@@ -51,7 +56,18 @@ const formatDate = (date: string) => {
             :width="header.width"
         >
             <template #default="scope">
-                <span v-if="
+                <span v-if="header.prop === 'description'">
+                    <Tooltip
+                        v-if="scope.row[header.prop].length > 68"
+                        :text="scope.row[header.prop]"
+                    >
+                        {{ formatDescription(scope.row[header.prop]) }}
+                    </Tooltip>
+                    <span v-else>
+                        {{ scope.row[header.prop] }}
+                    </span>
+                </span>
+                <span v-else-if="
                     header.prop === 'createdAt' ||
                     header.prop === 'dateStart' ||
                     header.prop === 'dateEnd'"
