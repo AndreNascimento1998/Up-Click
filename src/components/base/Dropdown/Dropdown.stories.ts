@@ -2,7 +2,7 @@ import Dropdown from './Dropdown.vue'
 import { Meta, StoryFn } from '@storybook/vue3'
 
 export default {
-    title: 'Components/Dropdown',
+    title: 'Components/Dropdowns/Dropdown',
     component: Dropdown,
     argTypes: {
         text: { control: 'text' },

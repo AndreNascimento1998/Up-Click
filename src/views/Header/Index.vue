@@ -31,7 +31,7 @@ const logout = async () => {
         <Logo />
         <article>
             <Dropdown
-                :text="useAuthStore.user?.email"
+                :text="useAuthStore.user?.email || ''"
                 rounded
                 :options="optionsDropdown"
                 :loading="loading"
