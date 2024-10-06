@@ -13,7 +13,7 @@ interface StoryArgs {
 }
 
 export default {
-    title: 'Components/Input',
+    title: 'Components/Inputs/Input',
     component: Input,
     argTypes: {
         label: { control: 'text' },

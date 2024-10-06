@@ -6,7 +6,7 @@ interface StoryArgs {
 }
 
 export default {
-    title: 'Components/Tooltip',
+    title: 'Components/Tooltips/Tooltip',
     component: Tooltip,
     argTypes: {
         text: { control: 'text' },

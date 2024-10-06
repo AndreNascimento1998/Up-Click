@@ -9,7 +9,7 @@ interface ButtonArgs {
 }
 
 export default {
-    title: 'Components/Button',
+    title: 'Components/Buttons/Button',
     component: Button,
     argTypes: {
         text: { control: 'text' },

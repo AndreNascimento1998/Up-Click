@@ -2,7 +2,7 @@ import DataTable from "@/components/base/DataTable/DataTable.vue"
 import { Meta, StoryFn } from "@storybook/vue3"
 
 export default {
-    title: 'Components/DataTable',
+    title: 'Components/Table/DataTable',
     component: DataTable,
     argTypes: {
         headers: { control: 'object' },
