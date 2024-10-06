@@ -48,7 +48,11 @@ const recoverPassword = async () => {
                 })
             })
         } else {
-            console.log('Erro ao validar o formulário')
+            ElNotification({
+                title: 'Erro',
+                message: 'Preencha os campos corretamente',
+                type: 'error'
+            })
         }
     })
 }
