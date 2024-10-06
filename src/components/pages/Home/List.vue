@@ -121,7 +121,7 @@ const handleRemove = (item: ITaskList) => {
         <section>
             <DataTable
                 @click-button-add="handleAdd"
-                :options-dropdown="optionsDropdown"
+                :options-dropdown="optionsDropdown as any"
                 :headers="headers"
                 :table-data="props.list"
                 :disabled="loading"

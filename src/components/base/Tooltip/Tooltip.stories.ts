@@ -1,7 +1,7 @@
 import Tooltip from "@/components/base/Tooltip/Tooltip.vue"
-import {Meta, Story} from "@storybook/vue3"
+import {Meta, StoryFn} from "@storybook/vue3"
 
-interface StoryArgs {
+interface TooltipArgs {
     text: string
 }
 
@@ -11,16 +11,16 @@ export default {
     argTypes: {
         text: { control: 'text' },
     },
-} as Meta
+} as Meta<TooltipArgs>
 
-const Template: Story = (args: StoryArgs) => ({
+const Template: StoryFn<TooltipArgs> = (args: any) => ({
     components: { Tooltip },
     setup() {
         return { args }
     },
     template: `
         <Tooltip v-bind="args">
-            Passa o mouse aqui
+            Passe o mouse aqui
         </Tooltip>
     `,
 })

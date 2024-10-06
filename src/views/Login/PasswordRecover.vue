@@ -60,7 +60,7 @@ const recoverPassword = async () => {
 </script>
 
 <template>
-    <el-form :model="formData" :rules="rules" ref="formRef">
+    <el-form :model="formData" :rules="rules as any" ref="formRef">
     <main class="container-recover-password">
         <section class="container-recover-password_section">
             <Logo style="padding-top: 16px" />

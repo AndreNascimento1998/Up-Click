@@ -1,7 +1,7 @@
 import DatePicker from "@/components/base/Inputs/DatePicker.vue";
-import {Meta} from "@storybook/vue3";
+import {Meta, StoryFn} from "@storybook/vue3";
 
-interface StoryArgs {
+interface DatepickerArgs {
     label: string
     modelValue: string[]
     disabled: boolean
@@ -12,12 +12,12 @@ export default {
     component: DatePicker,
     argTypes: {
         label: { control: 'text' },
-        modelValue: { control: 'array' },
+        modelValue: { control: 'object' },
         disabled: { control: 'boolean' },
     },
-} as Meta
+} as Meta<DatepickerArgs>
 
-export const Default = (args: StoryArgs) => ({
+export const Template: StoryFn<DatepickerArgs> = (args: any) => ({
     components: { DatePicker },
     setup() {
         return { args }
@@ -29,6 +29,7 @@ export const Default = (args: StoryArgs) => ({
     `,
 })
 
+export const Default = Template.bind({})
 Default.args = {
     label: 'Data',
     modelValue: [],

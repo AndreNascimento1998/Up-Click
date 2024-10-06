@@ -1,6 +1,15 @@
 import DataTable from "@/components/base/DataTable/DataTable.vue"
 import { Meta, StoryFn } from "@storybook/vue3"
 
+interface DataTableArgs {
+    headers: Array<{ prop: string, title: string, width: number }>
+    tableData: Array<{ title: string, description: string, value: string, priority: boolean }>
+    priority: boolean
+    operation: boolean
+    buttonText: string
+    optionsDropdown: Array<{ name: string, action: () => void }>
+}
+
 export default {
     title: 'Components/Table/DataTable',
     component: DataTable,
@@ -12,9 +21,9 @@ export default {
         buttonText: { control: 'text' },
         optionsDropdown: { control: 'object' }
     }
-} as Meta
+} as Meta<DataTableArgs>
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<DataTableArgs> = (args: any) => ({
     components: { DataTable },
     setup() {
         return { args }

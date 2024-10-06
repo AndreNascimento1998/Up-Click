@@ -1,4 +1,4 @@
-interface ITaskLists {
+interface ITaskList {
     id?: string
     title: string
     description: string
@@ -9,4 +9,4 @@ interface ITaskLists {
     createdAt?: string
 }
 
-export default ITaskLists
+export default ITaskList
