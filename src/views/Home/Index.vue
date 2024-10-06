@@ -31,14 +31,14 @@ const taskListFormat = computed( () =>
 const pendingTasks = computed( () => {
 
     if (taskListFormat.value && taskListFormat.value.length > 0){
-        return taskListFormat.value.filter(task => task.status === 'pending')
+        return taskListFormat.value.filter(task => task.status === 'pending') as ITaskList[]
     }
     return []
 })
 
 const completedTasks = computed( () => {
     if (taskListFormat.value && taskListFormat.value.length > 0) {
-        return taskListFormat.value.filter(task => task.status === 'completed')
+        return taskListFormat.value.filter(task => task.status === 'completed') as ITaskList[]
     }
     return []
 })
