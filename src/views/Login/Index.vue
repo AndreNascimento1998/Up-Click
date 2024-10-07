@@ -37,7 +37,7 @@ import FormLogin from "@/components/pages/Login/FormLogin.vue"
     @media (min-width: $xl2) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        padding: 8rem 20rem 0 ;
+        padding: 8rem 18rem 0 ;
     }
 
     &_body {

@@ -116,7 +116,7 @@ const recoverPassword = async () => {
 
         @media (min-width: $xl) {
             width: 50%;
-            padding: 0 0 0 20rem;
+            padding: 0 0 0 18rem;
         }
 
         &_title {
