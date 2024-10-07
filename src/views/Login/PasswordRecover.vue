@@ -105,7 +105,7 @@ const recoverPassword = async () => {
     @media (min-width: $xl) {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        padding: 10rem 0 0 0;
+        padding: 7rem 0 0 0;
     }
 
     &_section {
